@@ -250,13 +250,13 @@ class Model {
     public function hydrate($data, $removePrimaryKey = false) {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
-                if (strpos($key, 'date') !== false) {
+                /* if (strpos($key, 'date') !== false) {
 					try {
 						$value = \Carbon\Carbon::createFromFormat(\Carbon\Carbon::RFC3339, $value);
 						$value->setTimezone(date_default_timezone_get());
 					} catch (Exception $e) {
 					}
-                }
+                } */
                 $this->$key = $value;
             }
         }
