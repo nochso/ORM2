@@ -1,0 +1,32 @@
+{
+	"name": "nochso/ORM",
+	"description": "ORM with relations and performance in mind.",
+	"keywords": ["orm", "crud", "database", "relations", "relational", "mapper", "active record", "mysql", "sqlite", "storage"],
+	"homepage": "http://localhost/orm/",
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "Marcel Voigt",
+			"email": "marcelpvoigt@gmail.com",
+			"homepage": "http://noch.so",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"fzaninotto/faker": "1.4.*@dev",
+		"digitalnature/php-ref": "dev-master",
+		"leeoniya/dump-r": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"ORM\\": "src/",
+			"Test\\": "test/"
+		}
+	},
+	"config": {
+		"vendor-dir": "lib"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "4.0.*"
+	}
+}
