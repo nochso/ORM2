@@ -15,7 +15,8 @@
 	"require": {
 		"fzaninotto/faker": "1.4.*@dev",
 		"digitalnature/php-ref": "dev-master",
-		"leeoniya/dump-r": "dev-master"
+		"leeoniya/dump-r": "dev-master",
+		"nesbot/Carbon": "*"
 	},
 	"autoload": {
 		"psr-4": {

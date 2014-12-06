@@ -251,7 +251,7 @@ class Model {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
                 if (strpos($key, 'date') !== false) {
-                    $value = \nochso\dings\Carbon::createFromFormat(\nochso\dings\Carbon::RFC3339, $value);
+                    $value = \Carbon\Carbon::createFromFormat(\Carbon\Carbon::RFC3339, $value);
                     $value->setTimezone(date_default_timezone_get());
                 }
                 $this->$key = $value;
