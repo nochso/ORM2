@@ -128,7 +128,7 @@ class QueryBuilder {
 
             case self::QUERY_TYPE_UPDATE:
                 $sql = 'UPDATE `' . $this->tableName . '` SET ';
-                if ($this->modelData instanceof \ORM\ResultSet) {
+                if ($this->modelData instanceof \nochso\ORM\ResultSet) {
                     $sql .= $this->getMultiUpdateSetsSQL();
                 } else {
                     $sql .= $this->getUpdateSetsSQL();

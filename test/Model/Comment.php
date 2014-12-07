@@ -2,9 +2,9 @@
 
 namespace Test\Model;
 
-use \ORM\Relation;
+use \nochso\ORM\Relation;
 
-class Comment extends \ORM\Model {
+class Comment extends\nochso \ORM\Model {
 
     protected static $_primaryKey = 'cid';
     protected static $_tableName = 'comment';

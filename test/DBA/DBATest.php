@@ -1,6 +1,6 @@
 <?php
 
-use ORM\DBA\DBA;
+use \nochso\ORM\DBA\DBA;
 
 class DBATest extends PHPUnit_Framework_TestCase {
 
@@ -128,7 +128,7 @@ class DBATest extends PHPUnit_Framework_TestCase {
     public function testAddLog() {
         $data = array('foo');
         $statement = 'SELECT * FROM test';
-        $entry = new ORM\DBA\LogEntry($data, $statement);
+        $entry = new nochso\ORM\DBA\LogEntry($data, $statement);
         $entry->finish();
 
         $log = DBA::getLog();

@@ -1,7 +1,7 @@
 <?php
-
-use ORM\Model;
-use ORM\DBA\DBA;
+require("../lib/autoload.php");
+use nochso\ORM\Model;
+use nochso\ORM\DBA\DBA;
 use Test\Model\User;
 use Test\Model\UserRole;
 use Test\Model\Dummy;

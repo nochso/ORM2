@@ -2,9 +2,9 @@
 
 namespace Test\Model;
 
-use \ORM\Relation;
+use \nochso\ORM\Relation;
 
-class User extends \ORM\Model {
+class User extends \nochso\ORM\Model {
 
     protected static $_tableName = 'user';
     protected static $_relations = array(
