@@ -2,7 +2,7 @@
 
 ## Install via composer
 composer.json without packagist:
-```
+```javascript
 {
   "repositories": [{
     "type": "vcs",
@@ -49,4 +49,8 @@ $john->save();
 
 // Afterwards $john->subscriptions contains a list of \TV\Model\Subscription instances
 $john->subscriptions->fetch();
+
+if (count($john->subscriptions) > 0) {
+  $john->subscriptions[0]->delete();
+}
 ```
