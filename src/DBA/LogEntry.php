@@ -15,7 +15,6 @@ class LogEntry {
         $this->data = $data;
         $this->statement = $statement;
         $this->start = microtime(true);
-        $this->trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
     }
 
     public function finish() {
