@@ -2,6 +2,7 @@
 
 namespace nochso\ORM;
 
+use nochso\ORM\DBA\DBA;
 use PDO;
 use \nochso\ORM\Relation;
 
@@ -124,7 +125,7 @@ class Model {
     /**
      * 
      * @param int|string $id optional
-     * @return static|null
+     * @return static One model instance or null if nothing was found.
      */
     public function one($id = null) {
         if ($id !== null) {
@@ -136,6 +137,25 @@ class Model {
         if ($row = $statement->fetch(PDO::FETCH_OBJ)) {
             $one = $this->dispense()->hydrate($row);
             $one->_isNew = false;
+        }
+        $statement->closeCursor();
+        return $one;
+    }
+
+    /**
+     * @param $sql
+     * @param null|array $params Optional parameter array for PDO statement
+     * @return static One model instance or null if nothing was found.
+     */
+    public function oneSQL($sql, $params = null) {
+        if ($params !== null) {
+            $statement = DBA::execute($sql, $params);
+        } else {
+            $statement = DBA::execute($sql);
+        }
+        $one = null;
+        if ($row = $statement->fetch(PDO::FETCH_OBJ)) {
+            $one = $this->dispense()->hydrate($row);
         }
         $statement->closeCursor();
         return $one;
