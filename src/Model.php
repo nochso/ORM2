@@ -147,9 +147,9 @@ class Model {
      * @param array $data optional
      * @return \nochso\ORM\ResultSet
      */
-    public function all($sql = null, $data = null) {
-        if ($sql !== null && $data !== null) {
-            $statement = \nochso\ORM\DBA\DBA::execute($sql, $data);
+    public function all($sql = null, $params = null) {
+        if ($sql !== null && $params !== null) {
+            $statement = \nochso\ORM\DBA\DBA::execute($sql, $params);
         } else {
             $statement = $this->_queryBuilder->getStatement();
         }
