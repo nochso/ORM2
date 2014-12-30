@@ -19,6 +19,7 @@ class Model {
      */
     private $_isNew = true;
     private $_queryBuilder;
+    private $_extra = array();
 
     /**
      * 
@@ -258,6 +259,8 @@ class Model {
 					}
                 } */
                 $this->$key = $value;
+            } else {
+                $this->_extra[$key] = $value;
             }
         }
         if ($removePrimaryKey) {
@@ -265,6 +268,17 @@ class Model {
             $this->$key = null;
         }
         return $this;
+    }
+
+    public function extra($key) {
+        if (!isset($this->_extra[$key])) {
+            return null;
+        }
+        return $this->_extra[$key];
+    }
+
+    public function setExtra($key, $value) {
+        $this->_extra[$key] = $value;
     }
 
     /**
