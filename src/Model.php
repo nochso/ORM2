@@ -237,14 +237,12 @@ class Model {
      * Returns an associative array from this object excluding private variables and Relation objects
      * 
      * @return array
+     * @todo Figure out generic and decent way to convert from e.g. DateTime() to SQL-friendly data.
      */
     public function toAssoc() {
         $params = array();
         foreach (get_object_vars($this) as $key => $value) {
             if ($key[0] != '_' && !($value instanceof Relation)) {
-                if ($value instanceof \Carbon\Carbon) {
-                    $value = $value->copy()->setTimezone('UTC')->toRfc3339String();
-                }
                 $params[$key] = $value;
             }
         }
@@ -267,6 +265,7 @@ class Model {
      * 
      * Default: false
      * @return static
+     * @todo Figure out generic and decent way to convert from SQL data to DateTime() or similar
      */
     public function hydrate($data, $removePrimaryKey = false) {
         foreach ($data as $key => $value) {
