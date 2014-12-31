@@ -164,12 +164,12 @@ class Model {
     /**
      * 
      * @param string $sql optional
-     * @param array $data optional
+     * @param array $params optional
      * @return \nochso\ORM\ResultSet
      */
     public function all($sql = null, $params = null) {
         if ($sql !== null && $params !== null) {
-            $statement = \nochso\ORM\DBA\DBA::execute($sql, $params);
+            $statement = DBA::execute($sql, $params);
         } else {
             $statement = $this->_queryBuilder->getStatement();
         }
@@ -220,7 +220,7 @@ class Model {
         $statement = $this->_queryBuilder->getStatement();
         if ($this->_isNew) {
             $primaryKey = $this->getPrimaryKey();
-            $this->$primaryKey = DBA\DBA::lastInsertID();
+            $this->$primaryKey = DBA::lastInsertID();
             $this->_isNew = false;
         }
         $statement->closeCursor();
