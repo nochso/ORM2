@@ -13,3 +13,9 @@
 - Fix deciding of query type in Model::save() based on isNew and primary key value
 - Support custom loading and saving of fields
   - e.g. date column to Carbon and back again
+- CRUD forms
+  - List (edit/delete/add links)
+  - Detail = edit
+  - Support markdown preview
+  - Support relations
+  - Twig for templating
