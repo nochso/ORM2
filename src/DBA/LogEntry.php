@@ -36,9 +36,24 @@ class LogEntry {
         // Merge parameters into SQL statement
         $statement = $this->statement;
         foreach ($this->data as $key => $value) {
-            $statement = str_replace($key, "'" . $value . "'", $statement);
+            if (is_numeric($key)) {
+                $statement = $this->str_replace_once('?', "'" . $value . "'", $statement);
+            } else {
+                $statement = str_replace($key, "'" . $value . "'", $statement);
+            }
         }
         return $statement;
+    }
+
+    private function str_replace_once($search, $replace, $subject) {
+        $firstChar = strpos($subject, $search);
+        if($firstChar !== false) {
+            $beforeStr = substr($subject, 0, $firstChar);
+            $afterStr = substr($subject, $firstChar + strlen($search));
+            return $beforeStr . $replace . $afterStr;
+        } else {
+            return $subject;
+        }
     }
 
 }
