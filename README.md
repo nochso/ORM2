@@ -41,16 +41,25 @@ class User extends Model {
 ```php
 // Fetch a user by his name
 $john = User::select()->eq('name', 'john doe')->one();
+
+// or achieve the same using the primary key
+$sameJohn = User::select()->one($john->id);
+
 echo $john->name; // 'john doe'
 
 // Change and save his name
 $john->name = 'herbert';
 $john->save();
 
-// Afterwards $john->subscriptions contains a list of \TV\Model\Subscription instances
+// Loads the related list of \TV\Model\Subscription instances as defined in User::$_relations['subscriptions']
 $john->subscriptions->fetch();
 
 if (count($john->subscriptions) > 0) {
   $john->subscriptions[0]->delete();
 }
+
+// Update certain columns of certain users
+User::select()
+    ->in('user_id', array(3, 6, 15))
+    ->update(array('banned' => 1));
 ```
