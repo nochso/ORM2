@@ -6,7 +6,8 @@ use nochso\ORM\DBA\DBA;
 use PDO;
 use \nochso\ORM\Relation;
 
-class Model {
+class Model
+{
 
     /**
      * Static properties shared by Model classes
@@ -23,11 +24,12 @@ class Model {
     private $_extra = array();
 
     /**
-     * 
+     *
      * @param type $columns
      * @return static
      */
-    public static function select($columns = null) {
+    public static function select($columns = null)
+    {
         $caller = get_called_class();
         $new = new $caller();
         $new->_queryBuilder = new QueryBuilder($new->getTableName());
@@ -38,15 +40,17 @@ class Model {
     }
 
     /**
-     * 
+     *
      * @return static
      */
-    public function dispense() {
+    public function dispense()
+    {
         $caller = get_called_class();
         return new $caller();
     }
 
-    public function __construct($id = null) {
+    public function __construct($id = null)
+    {
         if (static::$_tableName === null) {
             static::$_tableName = self::classNameToTableName(get_class($this));
         }
@@ -73,21 +77,25 @@ class Model {
         }
     }
 
-    private static function classNameToTableName($className) {
+    private static function classNameToTableName($className)
+    {
         return strtolower(preg_replace(
                         array('/\\\\/', '/(?<=[a-z])([A-Z])/', '/__/'), array('_', '_$1', '_'), ltrim($className, '\\')
         ));
     }
 
-    public function getTableName() {
+    public function getTableName()
+    {
         return static::$_tableName;
     }
 
-    public function getPrimaryKey() {
+    public function getPrimaryKey()
+    {
         return static::$_primaryKey;
     }
 
-    public function getPrimaryKeyValue() {
+    public function getPrimaryKeyValue()
+    {
         $primaryKey = $this->getPrimaryKey();
         if (isset($this->$primaryKey)) {
             return $this->$primaryKey;
@@ -96,21 +104,25 @@ class Model {
         }
     }
 
-    public function setRelation($type, $property, $targetClass, $ownerKey = null, $foreignKey = null) {
+    public function setRelation($type, $property, $targetClass, $ownerKey = null, $foreignKey = null)
+    {
         $this->$property = new Relation($this, $type, $targetClass, $ownerKey, $foreignKey);
     }
 
-    public function getRelations() {
+    public function getRelations()
+    {
         return static::$_relations;
     }
 
-    public function fetchRelations() {
+    public function fetchRelations()
+    {
         foreach (static::$_relations as $key => $rel) {
             $this->$key->fetch();
         }
     }
 
-    private function addWhere($column, $op, $value) {
+    private function addWhere($column, $op, $value)
+    {
         if ($this->_queryBuilder === null) {
             $this->_queryBuilder = new QueryBuilder($this->getTableName());
         }
@@ -123,11 +135,12 @@ class Model {
      */
 
     /**
-     * 
+     *
      * @param int|string $id optional
      * @return static One model instance or null if nothing was found.
      */
-    public function one($id = null) {
+    public function one($id = null)
+    {
         if ($id !== null) {
             $this->eq(self::$_primaryKey, $id);
         }
@@ -147,7 +160,8 @@ class Model {
      * @param null|array $params Optional parameter array for PDO statement
      * @return static One model instance or null if nothing was found.
      */
-    public function oneSQL($sql, $params = null) {
+    public function oneSQL($sql, $params = null)
+    {
         if ($params !== null) {
             $statement = DBA::execute($sql, $params);
         } else {
@@ -163,12 +177,13 @@ class Model {
     }
 
     /**
-     * 
+     *
      * @param string $sql optional
      * @param array $params optional
      * @return \nochso\ORM\ResultSet
      */
-    public function all($sql = null, $params = null) {
+    public function all($sql = null, $params = null)
+    {
         if ($sql !== null && $params !== null) {
             $statement = DBA::execute($sql, $params);
         } else {
@@ -186,11 +201,12 @@ class Model {
         return $set;
     }
 
-    public function delete() {
+    public function delete()
+    {
         if ($this->_queryBuilder === null) {
             $this->_queryBuilder = new QueryBuilder($this->getTableName());
         }
-		
+        
         $this->_queryBuilder->setQueryType(QueryBuilder::QUERY_TYPE_DELETE);
 
         // If this is called on an instance with primary key, delete only this instance
@@ -202,7 +218,8 @@ class Model {
         $statement->closeCursor();
     }
 
-    public function save() {
+    public function save()
+    {
         if ($this->_queryBuilder === null) {
             $this->_queryBuilder = new QueryBuilder($this->getTableName());
         }
@@ -227,7 +244,8 @@ class Model {
         $statement->closeCursor();
     }
 
-    public function update($data) {
+    public function update($data)
+    {
         $this->_queryBuilder->setQueryType(QueryBuilder::QUERY_TYPE_UPDATE);
         $this->_queryBuilder->setModelData($data);
         $statement = $this->_queryBuilder->getStatement();
@@ -236,11 +254,12 @@ class Model {
 
     /**
      * Returns an associative array from this object excluding private variables and Relation objects
-     * 
+     *
      * @return array
      * @todo Figure out generic and decent way to convert from e.g. DateTime() to SQL-friendly data.
      */
-    public function toAssoc() {
+    public function toAssoc()
+    {
         $params = array();
         foreach (get_object_vars($this) as $key => $value) {
             if ($key[0] != '_' && !($value instanceof Relation)) {
@@ -256,27 +275,28 @@ class Model {
     /**
      * Sets the properties of this object using an associative array,
      * where key is the property name and value is the property value.
-     * 
+     *
      * Properties that do not exist in the current context are ignored.
-     * 
+     *
      * @param array $data Associative array
      * @param bool $removePrimaryKey Optional: If true, the primary key of the
      * model will be unset. This is useful for hydrating a new object
      * and the source ($_POST) erroneously supplies a primary key.
-     * 
+     *
      * Default: false
      * @return static
      * @todo Figure out generic and decent way to convert from SQL data to DateTime() or similar
      */
-    public function hydrate($data, $removePrimaryKey = false) {
+    public function hydrate($data, $removePrimaryKey = false)
+    {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
                 /* if (strpos($key, 'date') !== false) {
-					try {
-						$value = \Carbon\Carbon::createFromFormat(\Carbon\Carbon::RFC3339, $value);
-						$value->setTimezone(date_default_timezone_get());
-					} catch (Exception $e) {
-					}
+                    try {
+                        $value = \Carbon\Carbon::createFromFormat(\Carbon\Carbon::RFC3339, $value);
+                        $value->setTimezone(date_default_timezone_get());
+                    } catch (Exception $e) {
+                    }
                 } */
                 $this->$key = $value;
             } else {
@@ -290,14 +310,16 @@ class Model {
         return $this;
     }
 
-    public function extra($key) {
+    public function extra($key)
+    {
         if (!isset($this->_extra[$key])) {
             return null;
         }
         return $this->_extra[$key];
     }
 
-    public function setExtra($key, $value) {
+    public function setExtra($key, $value)
+    {
         $this->_extra[$key] = $value;
     }
 
@@ -307,238 +329,259 @@ class Model {
 
     /**
      * Filter where column equals value
-     * 
+     *
      * @param string $column
      * @param type $value
      * @return static
      */
-    public function eq($column, $value) {
+    public function eq($column, $value)
+    {
         return $this->addWhere($column, '=', $value);
     }
 
     /**
      * Filter where column equals value
-     * 
+     *
      * @param string $column
      * @param type $value
      * @return static
      */
-    public function where($column, $value) {
+    public function where($column, $value)
+    {
         return $this->eq($column, $value);
     }
 
     /**
      * Filter where column does not equal value
-     * 
+     *
      * @param string $column
      * @param type $value
      * @return static
      */
-    public function neq($column, $value) {
+    public function neq($column, $value)
+    {
         return $this->addWhere($column, '!=', $value);
     }
 
     /**
      * Filter where column is less than value
-     * 
+     *
      * @param string $column
      * @param type $value
      * @return static
      */
-    public function lt($column, $value) {
+    public function lt($column, $value)
+    {
         return $this->addWhere($column, '<', $value);
     }
 
     /**
      * Filter where column is less than or equal value
-     * 
+     *
      * @param string $column
      * @param type $value
      * @return static
      */
-    public function lte($column, $value) {
+    public function lte($column, $value)
+    {
         return $this->addWhere($column, '<=', $value);
     }
 
     /**
      * Filter where column is greater than value
-     * 
+     *
      * @param string $column
      * @param type $value
      * @return static
      */
-    public function gt($column, $value) {
+    public function gt($column, $value)
+    {
         return $this->addWhere($column, '>', $value);
     }
 
     /**
      * Filter where column is greater than or equal value
-     * 
+     *
      * @param string $column
      * @param type $value
      * @return static
      */
-    public function gte($column, $value) {
+    public function gte($column, $value)
+    {
         return $this->addWhere($column, '>=', $value);
     }
 
     /**
      * Filter where column matches list of values
-     * 
+     *
      * @param string $column
      * @param array $values
      * @return static
      */
-    public function in($column, $values) {
+    public function in($column, $values)
+    {
         return $this->addWhere($column, 'IN', $values);
     }
 
     /**
      * Filter where column does not match any of the value
-     * 
+     *
      * @param string $column
      * @param array $values
      * @return static
      */
-    public function notIn($column, $values) {
+    public function notIn($column, $values)
+    {
         return $this->addWhere($column, 'NOT IN', $values);
     }
 
     /**
      * Filter where column matches value using the LIKE operator
-     * 
+     *
      * @param string $column
      * @param type $value
      * @return static
      */
-    public function like($column, $value) {
+    public function like($column, $value)
+    {
         return $this->addWhere($column, 'LIKE', $value);
     }
 
     /**
      * Filter where column does not match value using the LIKE operator
-     * 
+     *
      * @param string $column
      * @param type $value
      * @return static
      */
-    public function notLike($column, $value) {
+    public function notLike($column, $value)
+    {
         return $this->addWhere($column, 'NOT LIKE', $value);
     }
 
     /**
      * Filter where column is SQL NULL
-     * 
+     *
      * @param string $column
      * @return static
      */
-    public function isNull($column) {
+    public function isNull($column)
+    {
         return $this->addWhere($column, 'IS NULL', '');
     }
 
     /**
      * Filter where column is not SQL NULL
-     * 
+     *
      * @param string $column
      * @return static
      */
-    public function notNull($column) {
+    public function notNull($column)
+    {
         return $this->addWhere($column, 'IS NOT NULL', '');
     }
 
     /**
      * Limit the amount of maximum rows returned
-     * 
+     *
      * @param int $limit
      * @param int $offset
      * @return static
      */
-    public function limit($limit, $offset = null) {
+    public function limit($limit, $offset = null)
+    {
         $this->_queryBuilder->setLimit($limit, $offset);
         return $this;
     }
 
     /**
      * Offset the result in combination with $this->limit()
-     * 
+     *
      * @param int $offset
      * @return static
      */
-    public function offset($offset) {
+    public function offset($offset)
+    {
         $this->_queryBuilder->setOffset($offset);
         return $this;
     }
 
     /**
      * Sort the results by ascending order
-     * 
+     *
      * @param string $column
      * @return static
      */
-    public function orderAsc($column) {
+    public function orderAsc($column)
+    {
         $this->_queryBuilder->addOrderAsc($column);
         return $this;
     }
 
     /**
      * Sort the results by descending order
-     * 
+     *
      * @param string $column
      * @return static
      */
-    public function orderDesc($column) {
+    public function orderDesc($column)
+    {
         $this->_queryBuilder->addOrderDesc($column);
         return $this;
     }
 
     /**
      * Return the average value
-     * 
+     *
      * @param string $column
      * @return static
      */
-    public function avg($column) {
+    public function avg($column)
+    {
         return $this->_queryBuilder->getAggregateColumn('AVG', $column);
     }
 
     /**
      * Return the sum of values
-     * 
+     *
      * @param string $column
      * @return static
      */
-    public function sum($column) {
+    public function sum($column)
+    {
         return $this->_queryBuilder->getAggregateColumn('SUM', $column);
     }
 
     /**
      * Return the count of values
-     * 
+     *
      * @param string $column
      * @return static
      */
-    public function count($column = '*') {
+    public function count($column = '*')
+    {
         return $this->_queryBuilder->getAggregateColumn('COUNT', $column);
     }
 
     /**
      * Return the minimum of values
-     * 
+     *
      * @param string $column
      * @return static
      */
-    public function min($column) {
+    public function min($column)
+    {
         return $this->_queryBuilder->getAggregateColumn('MIN', $column);
     }
 
     /**
      * Return the maximum of values
-     * 
+     *
      * @param string $column
      * @return static
      */
-    public function max($column) {
+    public function max($column)
+    {
         return $this->_queryBuilder->getAggregateColumn('MAX', $column);
     }
-
 }

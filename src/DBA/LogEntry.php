@@ -2,7 +2,8 @@
 
 namespace nochso\ORM\DBA;
 
-class LogEntry {
+class LogEntry
+{
 
     public $data;
     public $statement;
@@ -10,19 +11,22 @@ class LogEntry {
     public $end;
     public $duration;
 
-    public function __construct($data, $statement) {
+    public function __construct($data, $statement)
+    {
         $this->data = $data;
         $this->statement = $statement;
         $this->start = microtime(true);
     }
 
-    public function finish() {
+    public function finish()
+    {
         $this->end = microtime(true);
         $this->duration = $this->end - $this->start;
         DBA::addLog($this);
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         $s = round($this->duration, 3) . 's ';
         $s .= ' <b>' . $this->getPrettyStatement() . '</b><br />';
         return $s;
@@ -45,9 +49,10 @@ class LogEntry {
         return $statement;
     }
 
-    private function str_replace_once($search, $replace, $subject) {
+    private function str_replace_once($search, $replace, $subject)
+    {
         $firstChar = strpos($subject, $search);
-        if($firstChar !== false) {
+        if ($firstChar !== false) {
             $beforeStr = substr($subject, 0, $firstChar);
             $afterStr = substr($subject, $firstChar + strlen($search));
             return $beforeStr . $replace . $afterStr;
@@ -55,5 +60,4 @@ class LogEntry {
             return $subject;
         }
     }
-
 }

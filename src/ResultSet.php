@@ -4,7 +4,8 @@ namespace nochso\ORM;
 
 use nochso\ORM\Relation;
 
-class ResultSet implements \Iterator, \ArrayAccess, \Countable {
+class ResultSet implements \Iterator, \ArrayAccess, \Countable
+{
 
     protected $rows = array();
     private $className;
@@ -12,19 +13,22 @@ class ResultSet implements \Iterator, \ArrayAccess, \Countable {
     /**
      * Creating and filling a result set
      */
-    public function __construct($className, $rows = array()) {
+    public function __construct($className, $rows = array())
+    {
         $this->className = $className;
         $this->rows = $rows;
     }
 
-    public function setRows($rows) {
+    public function setRows($rows)
+    {
         $this->rows = $rows;
     }
 
     /**
      * Functions to operate on all elements of the ResultSet at once
      */
-    public function delete() {
+    public function delete()
+    {
         if (count($this) == 0) {
             return;
         }
@@ -36,7 +40,8 @@ class ResultSet implements \Iterator, \ArrayAccess, \Countable {
     /**
      * Update all entries in this ResultSet with the same values
      */
-    public function update($data) {
+    public function update($data)
+    {
         if (count($this) == 0) {
             return;
         }
@@ -50,7 +55,8 @@ class ResultSet implements \Iterator, \ArrayAccess, \Countable {
      * It uses the actual unique values held by the Model instances,
      * unlike update() which takes the values as an argument and uses them for every Model instance
      */
-    public function save() {
+    public function save()
+    {
         if (count($this) == 0) {
             return;
         }
@@ -65,10 +71,11 @@ class ResultSet implements \Iterator, \ArrayAccess, \Countable {
 
     /**
      * Returns an array of all primary key values contained in the ResultSet
-     * 
+     *
      * @return array
      */
-    public function getPrimaryKeyList() {
+    public function getPrimaryKeyList()
+    {
         $ids = array();
         if (count($this) > 0) {
             foreach ($this as $row) {
@@ -78,7 +85,8 @@ class ResultSet implements \Iterator, \ArrayAccess, \Countable {
         return $ids;
     }
 
-    public function fetchRelations() {
+    public function fetchRelations()
+    {
         if (count($this) == 0) {
             return $this;
         }
@@ -99,7 +107,7 @@ class ResultSet implements \Iterator, \ArrayAccess, \Countable {
         $groups = array();
         foreach ($this->rows as $key => $row) {
             foreach ($relations as $property => $relation) {
-                // Fill $filterIDs with the values of the foreign keys to be filtered on		
+                // Fill $filterIDs with the values of the foreign keys to be filtered on
                 $filterIDs[$property]['ids'][] = $row->$property->getForeignValue();
 
                 // Group primary key values of all the rows by the foreign keys we're looking up in the foreign rows.
@@ -135,41 +143,49 @@ class ResultSet implements \Iterator, \ArrayAccess, \Countable {
     /**
      * Iterator interface
      */
-    public function rewind() {
+    public function rewind()
+    {
         return reset($this->rows);
     }
 
-    public function current() {
+    public function current()
+    {
         return current($this->rows);
     }
 
-    public function key() {
+    public function key()
+    {
         return key($this->rows);
     }
 
-    public function next() {
+    public function next()
+    {
         return next($this->rows);
     }
 
-    public function valid() {
+    public function valid()
+    {
         return key($this->rows) !== null;
     }
 
     /**
      * ArrayAccess interface
      */
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         return isset($this->rows[$offset]);
     }
 
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         if (isset($this->rows[$offset])) {
             return $this->rows[$offset];
         }
         return null;
     }
 
-    public function offsetSet($offset, $value) {
+    public function offsetSet($offset, $value)
+    {
         if (is_null($offset)) {
             $this->rows[] = $value;
         } else {
@@ -177,15 +193,16 @@ class ResultSet implements \Iterator, \ArrayAccess, \Countable {
         }
     }
 
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         unset($this->rows[$offset]);
     }
 
     /**
      * Countable interface
      */
-    public function count() {
+    public function count()
+    {
         return count($this->rows);
     }
-
 }

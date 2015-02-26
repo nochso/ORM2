@@ -2,7 +2,8 @@
 
 namespace nochso\ORM;
 
-class Relation implements \Iterator, \ArrayAccess, \Countable {
+class Relation implements \Iterator, \ArrayAccess, \Countable
+{
 
     // The type of relation
     const HAS_MANY = 0;
@@ -20,7 +21,8 @@ class Relation implements \Iterator, \ArrayAccess, \Countable {
     public $ownerKey;
     public $data;
 
-    public function __construct(&$ownerInstance, $type, $foreignClass, $ownerKey = null, $foreignKey = null) {
+    public function __construct(&$ownerInstance, $type, $foreignClass, $ownerKey = null, $foreignKey = null)
+    {
         $this->type = $type;
         $this->foreignClass = $foreignClass;
         $this->owner = $ownerInstance;
@@ -29,13 +31,15 @@ class Relation implements \Iterator, \ArrayAccess, \Countable {
         $this->foreignKey = $foreignKey;
     }
 
-    private function init() {
+    private function init()
+    {
         if ($this->foreign == null) {
             $this->foreign = new $this->foreignClass();
         }
     }
 
-    public function fetch() {
+    public function fetch()
+    {
         if ($this->data !== null) {
             return $this->data;
         }
@@ -61,10 +65,11 @@ class Relation implements \Iterator, \ArrayAccess, \Countable {
 
     /**
      * Returns the name of the column that will be filtered on
-     * 
+     *
      * @return string
      */
-    public function getForeignKey() {
+    public function getForeignKey()
+    {
         if ($this->foreignKey !== null) {
             return $this->foreignKey;
         }
@@ -82,10 +87,11 @@ class Relation implements \Iterator, \ArrayAccess, \Countable {
 
     /**
      * Returns the value identifiying the foreign rows, i.e. the value belonging to getForeignkey()
-     * 
+     *
      * @return type
      */
-    public function getForeignValue() {
+    public function getForeignValue()
+    {
         if ($this->ownerKey !== null) {
             $fk = $this->ownerKey;
             return $this->owner->$fk;
@@ -104,7 +110,8 @@ class Relation implements \Iterator, \ArrayAccess, \Countable {
         }
     }
 
-    public function __get($name) {
+    public function __get($name)
+    {
         if (isset($this->data->$name)) {
             return $this->data->$name;
         } else {
@@ -112,46 +119,53 @@ class Relation implements \Iterator, \ArrayAccess, \Countable {
         }
     }
 
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         $this->data->$name = $value;
     }
 
-    public function __call($name, $arguments) {
+    public function __call($name, $arguments)
+    {
         call_user_func_array(array($this->data, $name), $arguments);
     }
 
     /**
      * Iterator interface
      */
-    public function rewind() {
+    public function rewind()
+    {
         if (is_array($this->data)) {
             return reset($this->data);
         }
         return $this->data->rewind();
     }
 
-    public function current() {
+    public function current()
+    {
         if (is_array($this->data)) {
             return current($this->data);
         }
         return $this->data->current();
     }
 
-    public function key() {
+    public function key()
+    {
         if (is_array($this->data)) {
             return key($this->data);
         }
         return $this->data->key();
     }
 
-    public function next() {
+    public function next()
+    {
         if (is_array($this->data)) {
             return next($this->data);
         }
         return $this->data->next();
     }
 
-    public function valid() {
+    public function valid()
+    {
         if (is_array($this->data)) {
             return key($this->data) !== null;
         }
@@ -161,7 +175,8 @@ class Relation implements \Iterator, \ArrayAccess, \Countable {
     /**
      * ArrayAccess interface
      */
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         if ($this->data instanceof \nochso\ORM\Model) {
             return isset($this->data->$offset);
         } else {
@@ -169,7 +184,8 @@ class Relation implements \Iterator, \ArrayAccess, \Countable {
         }
     }
 
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         if ($this->data instanceof \nochso\ORM\Model) {
             if (isset($this->data->$offset)) {
                 return $this->data->$offset;
@@ -180,7 +196,8 @@ class Relation implements \Iterator, \ArrayAccess, \Countable {
         return null;
     }
 
-    public function offsetSet($offset, $value) {
+    public function offsetSet($offset, $value)
+    {
         if (is_null($offset)) {
             $this->data[] = $value;
         } else {
@@ -188,15 +205,16 @@ class Relation implements \Iterator, \ArrayAccess, \Countable {
         }
     }
 
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         unset($this->data[$offset]);
     }
 
     /**
      * Countable interface
      */
-    public function count() {
+    public function count()
+    {
         return count($this->data);
     }
-
 }
