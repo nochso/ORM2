@@ -37,7 +37,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\ResultSet::fetchRelations
+     * @covers nochso\ORM\ResultSet::fetchRelations
      */
     public function testFetchRelations() {
         $set = User::select()->all();
@@ -60,7 +60,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\ResultSet::getPrimaryKeyList
+     * @covers nochso\ORM\ResultSet::getPrimaryKeyList
      */
     public function testGetPrimaryKeyList() {
         $users = User::select()->all();
@@ -74,7 +74,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\ResultSet::update
+     * @covers nochso\ORM\ResultSet::update
      */
     public function testUpdate() {
         $users = User::select()->all();
@@ -93,7 +93,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\ResultSet::save
+     * @covers nochso\ORM\ResultSet::save
      */
     public function testSave() {
         $users = User::select()->all();
@@ -124,7 +124,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\ResultSet::offsetGet
+     * @covers nochso\ORM\ResultSet::offsetGet
      */
     public function testOffsetGet() {
         $ids = array(1, 2);
@@ -137,7 +137,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\ResultSet::offsetSet
+     * @covers nochso\ORM\ResultSet::offsetSet
      */
     public function testOffsetSet() {
         $users = User::select()->eq('id', 99)->all();
@@ -151,7 +151,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\ResultSet::delete
+     * @covers nochso\ORM\ResultSet::delete
      */
     public function testDelete() {
         // Create unique user
@@ -179,7 +179,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\ResultSet::count
+     * @covers nochso\ORM\ResultSet::count
      */
     public function testCount() {
         $users = User::select()->all();

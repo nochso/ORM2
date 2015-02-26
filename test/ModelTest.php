@@ -1,10 +1,14 @@
 <?php
-require("../lib/autoload.php");
-use nochso\ORM\Model;
 use nochso\ORM\DBA\DBA;
-use Test\Model\User;
-use Test\Model\UserRole;
 use Test\Model\Dummy;
+use Test\Model\User;
+
+require("lib/autoload.php");
+//use nochso\ORM\Model;
+//use nochso\ORM\DBA\DBA;
+//use Test\Model\User;
+//use Test\Model\UserRole;
+//use Test\Model\Dummy;
 
 class ModelTest extends PHPUnit_Framework_TestCase {
 
@@ -30,14 +34,14 @@ class ModelTest extends PHPUnit_Framework_TestCase {
         DBA::execute('DELETE FROM user');
         DBA::execute('DELETE FROM user_role');
         DBA::execute("DELETE FROM sqlite_sequence WHERE name = 'user'");
-        DBA::execute('INSERT INTO user (name, role_id) VALUES(?, ?)', array('Abed', 1));
-        DBA::execute('INSERT INTO user (name, role_id) VALUES(?, ?)', array('Dean', 2));
-        DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', array(1, 'User'));
-        DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', array(2, 'Admin'));
+        DBA::execute('INSERT INTO user (name, role_id) VALUES(?, ?)', ['Abed', 1]);
+        DBA::execute('INSERT INTO user (name, role_id) VALUES(?, ?)', ['Dean', 2]);
+        DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', [1, 'User']);
+        DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', [2, 'Admin']);
     }
 
     /**
-     * @covers ORM\Model::__construct
+     * @covers nochso\ORM\Model::__construct
      */
     public function testConstructor() {
         // Dummy::$_tableName is null before first instantiation
@@ -72,7 +76,7 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\Model::select
+     * @covers nochso\ORM\Model::select
      */
     public function testSelect() {
         // Should dispense a Model instance
@@ -81,7 +85,7 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\Model::dispense
+     * @covers nochso\ORM\Model::dispense
      */
     public function testDispense() {
         $user = new User();
@@ -99,12 +103,12 @@ class ModelTest extends PHPUnit_Framework_TestCase {
         $user = User::select($column);
 
         // Get the private QueryBuilder
-        $refQueryBuilder = new \ReflectionProperty('ORM\Model', '_queryBuilder');
+        $refQueryBuilder = new \ReflectionProperty('\nochso\ORM\Model', '_queryBuilder');
         $refQueryBuilder->setAccessible(true);
         $queryBuilder = $refQueryBuilder->getValue($user);
 
         // Test the QueryBuilders selectColumns
-        $refSelectColumns = new \ReflectionProperty('ORM\QueryBuilder', 'selectColumns');
+        $refSelectColumns = new \ReflectionProperty('\nochso\ORM\QueryBuilder', 'selectColumns');
         $refSelectColumns->setAccessible(true);
         $selectColumns = $refSelectColumns->getValue($queryBuilder);
         $this->assertCount(1, $selectColumns);
@@ -112,7 +116,7 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\Model::save
+     * @covers nochso\ORM\Model::save
      */
     public function testSave() {
         // Insert new user, should fill the primary key after insert
@@ -134,7 +138,7 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\Model::save
+     * @covers nochso\ORM\Model::save
      * @expectedException Exception
      * @expectedExceptionMessage Can not update existing row of table user without knowing the primary key.
      */
@@ -145,18 +149,18 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\Model::toAssoc
+     * @covers nochso\ORM\Model::toAssoc
      */
     public function testToAssoc() {
         $user = User::select()->one();
 
         $assoc = $user->toAssoc();
-        $expectedAssoc = array('id' => 1, 'name' => 'Abed', 'role_id' => 1);
+        $expectedAssoc = ['id' => 1, 'name' => 'Abed', 'role_id' => 1];
         $this->assertEquals($assoc, $expectedAssoc);
     }
 
     /**
-     * @covers ORM\Model::getPrimaryKeyValue
+     * @covers nochso\ORM\Model::getPrimaryKeyValue
      */
     public function testGetPrimaryKeyValue() {
         $user = new User(1);
@@ -166,19 +170,18 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\Model::hydrate
+     * @covers nochso\ORM\Model::hydrate
      */
     public function testHydrate() {
         $user = new User();
-        $this->assertObjectNotHasAttribute('key', $user);
-        $data = array('key' => 'value', 'key2' => 'value2');
+        $data = ['id' => 'value', 'name' => 'value2'];
         $user->hydrate($data);
-        $this->assertEquals($user->key, 'value');
-        $this->assertEquals($user->key2, 'value2');
+        $this->assertEquals('value', $user->id);
+        $this->assertEquals('value2', $user->name);
     }
 
     /**
-     * @covers ORM\Model::one
+     * @covers nochso\ORM\Model::one
      */
     public function testOne() {
         $user = User::select()->eq('id', 'x')->one();
@@ -188,11 +191,11 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\Model::all
+     * @covers nochso\ORM\Model::all
      */
     public function testAll() {
         $users = User::select()->eq('id', 'x')->all();
-        $this->assertInstanceOf('ORM\ResultSet', $users);
+        $this->assertInstanceOf('\nochso\ORM\ResultSet', $users);
         $this->assertCount(0, $users);
 
         $users = User::select()->all();
@@ -200,7 +203,7 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\Model::delete
+     * @covers nochso\ORM\Model::delete
      */
     public function testDelete() {
         // Delete user by filtering
@@ -216,7 +219,7 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\Model::fetchRelations
+     * @covers nochso\ORM\Model::fetchRelations
      */
     public function testFetchRelations() {
         $user = new User(1);
@@ -228,7 +231,7 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\Model::update
+     * @covers nochso\ORM\Model::update
      */
     public function testUpdate() {
         $users = User::select()->all();
@@ -236,7 +239,7 @@ class ModelTest extends PHPUnit_Framework_TestCase {
             $this->assertNotEquals($user->name, 'updated name');
         }
 
-        User::select()->update(array('name' => 'updated name'));
+        User::select()->update(['name' => 'updated name']);
         $users = User::select()->all();
         foreach ($users as $user) {
             $this->assertEquals($user->name, 'updated name');

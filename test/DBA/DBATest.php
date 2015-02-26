@@ -1,6 +1,6 @@
 <?php
 
-use \nochso\ORM\DBA\DBA;
+use nochso\ORM\DBA\DBA;
 
 class DBATest extends PHPUnit_Framework_TestCase {
 
@@ -21,14 +21,17 @@ class DBATest extends PHPUnit_Framework_TestCase {
         DBA::execute("INSERT INTO user (id, name, role_id) VALUES (1, 'user', 1)");
     }
 
-    public function getPDO() {
-        $reflection = new \ReflectionProperty('\ORM\DBA\DBA', 'pdo');
-        $reflection->setAccessible(true);
-        return $reflection->getValue();
-    }
+	/**
+	 * @covers nochso\ORM\DBA\DBA::connect
+	 */
+	public function testConnect() {
+		DBA::disconnect();
+		DBA::connect('sqlite::memory:', '', '');
+		$this->assertNotNull($this->getPDO());
+	}
 
     /**
-     * @covers ORM\DBA\DBA::beginTransaction
+     * @covers nochso\ORM\DBA\DBA::beginTransaction
      */
     public function testBeginTransaction() {
         $this->assertTrue(DBA::beginTransaction());
@@ -42,7 +45,7 @@ class DBATest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\DBA\DBA::commit
+     * @covers nochso\ORM\DBA\DBA::commit
      */
     public function testCommit() {
         DBA::beginTransaction();
@@ -55,7 +58,7 @@ class DBATest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\DBA\DBA::rollBack
+     * @covers nochso\ORM\DBA\DBA::rollBack
      */
     public function testRollBack() {
         DBA::beginTransaction();
@@ -69,24 +72,21 @@ class DBATest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\DBA\DBA::lastInsertID
+     * @covers nochso\ORM\DBA\DBA::lastInsertID
      */
     public function testLastInsertID() {
         $this->insertUser();
         $this->assertEquals(DBA::lastInsertID(), 1);
     }
 
+	public function getPDO() {
+		$reflection = new \ReflectionProperty('\nochso\ORM\DBA\DBA', 'pdo');
+		$reflection->setAccessible(true);
+		return $reflection->getValue();
+	}
+	
     /**
-     * @covers ORM\DBA\DBA::connect
-     */
-    public function testConnect() {
-        DBA::disconnect();
-        DBA::connect('sqlite::memory:', '', '');
-        $this->assertNotNull($this->getPDO());
-    }
-
-    /**
-     * @covers ORM\DBA\DBA::connect
+     * @covers nochso\ORM\DBA\DBA::connect
      * @expectedException PDOException
      */
     public function testConnectException() {
@@ -94,7 +94,7 @@ class DBATest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\DBA\DBA::disconnect
+     * @covers nochso\ORM\DBA\DBA::disconnect
      */
     public function testDisconnect() {
         $this->assertNotNull($this->getPDO());
@@ -103,7 +103,7 @@ class DBATest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\DBA\DBA::getLog
+     * @covers nochso\ORM\DBA\DBA::getLog
      */
     public function testGetLog() {
         // Log has entries
@@ -123,10 +123,10 @@ class DBATest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\DBA\DBA::addLog
+     * @covers nochso\ORM\DBA\DBA::addLog
      */
     public function testAddLog() {
-        $data = array('foo');
+        $data = ['foo'];
         $statement = 'SELECT * FROM test';
         $entry = new nochso\ORM\DBA\LogEntry($data, $statement);
         $entry->finish();
@@ -140,7 +140,7 @@ class DBATest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\DBA\DBA::emptyLog
+     * @covers nochso\ORM\DBA\DBA::emptyLog
      */
     public function testEmptyLog() {
         $this->assertGreaterThan(0, count(DBA::getLog()));
@@ -149,7 +149,7 @@ class DBATest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\DBA\DBA::prepare
+     * @covers nochso\ORM\DBA\DBA::prepare
      */
     public function testPrepare() {
         $sql = 'SELECT * FROM user';
@@ -158,7 +158,7 @@ class DBATest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\DBA\DBA::prepare
+     * @covers nochso\ORM\DBA\DBA::prepare
      * @expectedException PDOException
      */
     public function testPrepareException() {
@@ -166,13 +166,13 @@ class DBATest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\DBA\DBA::execute
+     * @covers nochso\ORM\DBA\DBA::execute
      */
     public function testExecute() {
         // INSERT and check it has been logged
         $username = 'username';
         $sql = "INSERT INTO user (name, role_id) VALUES (?, ?)";
-        DBA::execute($sql, array($username, 1));
+        DBA::execute($sql, [$username, 1]);
         $log = DBA::getLog();
         $lastEntry = end($log);
         $this->assertEquals($lastEntry->statement, $sql);
@@ -184,7 +184,7 @@ class DBATest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers ORM\DBA\DBA::execute
+     * @covers nochso\ORM\DBA\DBA::execute
      * @expectedException PDOException
      */
     public function testExecuteException() {
