@@ -3,15 +3,17 @@
 use nochso\ORM\DBA\DBA;
 use nochso\ORM\DBA\LogEntry;
 
-class LogEntryTest extends PHPUnit_Framework_TestCase {
+class LogEntryTest extends PHPUnit_Framework_TestCase
+{
 
     /**
      * @covers \nochso\ORM\DBA\LogEntry::__construct
      */
-    public function testConstructor() {
+    public function testConstructor()
+    {
         $data = [':key' => 'value'];
         $statement = 'SELECT * FROM user';
-		$entry = new LogEntry($data,$statement);
+        $entry = new LogEntry($data, $statement);
         $this->assertEquals($entry->statement, $statement);
         $this->assertEquals($entry->data, $data);
         $this->assertGreaterThan(0, $entry->start);
@@ -20,7 +22,8 @@ class LogEntryTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers \nochso\ORM\DBA\LogEntry::finish
      */
-    public function testFinish() {
+    public function testFinish()
+    {
         $data = [':key' => 'value'];
         $statement = 'SELECT * FROM user';
         $entry = new LogEntry($data, $statement);
@@ -32,5 +35,4 @@ class LogEntryTest extends PHPUnit_Framework_TestCase {
         $lastEntry = end($log);
         $this->assertEquals($lastEntry, $entry);
     }
-
 }

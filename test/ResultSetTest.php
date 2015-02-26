@@ -4,9 +4,11 @@ use nochso\ORM\ResultSet;
 use nochso\ORM\DBA\DBA;
 use Test\Model\User;
 
-class ResultSetTest extends PHPUnit_Framework_TestCase {
+class ResultSetTest extends PHPUnit_Framework_TestCase
+{
 
-    public static function setUpBeforeClass() {
+    public static function setUpBeforeClass()
+    {
         DBA::connect('sqlite::memory:', '', '');
         DBA::execute('CREATE TABLE comment (
 		  cid INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -24,7 +26,8 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
 		);');
     }
 
-    public function setUp() {
+    public function setUp()
+    {
         DBA::execute('DELETE FROM user');
         DBA::execute("DELETE FROM sqlite_sequence WHERE name = 'user'");
         DBA::execute('DELETE FROM user_role');
@@ -39,7 +42,8 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\ResultSet::fetchRelations
      */
-    public function testFetchRelations() {
+    public function testFetchRelations()
+    {
         $set = User::select()->all();
         foreach ($set as $user) {
             $this->assertNull($user->role->data);
@@ -62,7 +66,8 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\ResultSet::getPrimaryKeyList
      */
-    public function testGetPrimaryKeyList() {
+    public function testGetPrimaryKeyList()
+    {
         $users = User::select()->all();
         $keyList = $users->getPrimaryKeyList();
         $this->assertEquals($keyList, array(1, 2));
@@ -76,7 +81,8 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\ResultSet::update
      */
-    public function testUpdate() {
+    public function testUpdate()
+    {
         $users = User::select()->all();
         $users->update(array('role_id' => 3));
 
@@ -95,7 +101,8 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\ResultSet::save
      */
-    public function testSave() {
+    public function testSave()
+    {
         $users = User::select()->all();
         // Change the users
         foreach ($users as $user) {
@@ -126,7 +133,8 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\ResultSet::offsetGet
      */
-    public function testOffsetGet() {
+    public function testOffsetGet()
+    {
         $ids = array(1, 2);
         $users = User::select()->all();
         foreach ($ids as $id) {
@@ -139,7 +147,8 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\ResultSet::offsetSet
      */
-    public function testOffsetSet() {
+    public function testOffsetSet()
+    {
         $users = User::select()->eq('id', 99)->all();
         $this->assertArrayNotHasKey(1, $users);
         $user = new User(1);
@@ -153,7 +162,8 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\ResultSet::delete
      */
-    public function testDelete() {
+    public function testDelete()
+    {
         // Create unique user
         $user = new User();
         $user->name = 'odd man out';
@@ -181,9 +191,9 @@ class ResultSetTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\ResultSet::count
      */
-    public function testCount() {
+    public function testCount()
+    {
         $users = User::select()->all();
         $this->assertEquals(count($users), 2);
     }
-
 }

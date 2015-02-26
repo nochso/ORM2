@@ -4,7 +4,8 @@ namespace Test\Model;
 
 use \nochso\ORM\Relation;
 
-class UserRole extends \nochso\ORM\Model {
+class UserRole extends \nochso\ORM\Model
+{
 
     protected static $_tableName = 'user_role';
     protected static $_relations = array(
@@ -12,5 +13,4 @@ class UserRole extends \nochso\ORM\Model {
     );
     public $id;
     public $description;
-
 }

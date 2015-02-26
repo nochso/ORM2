@@ -4,7 +4,8 @@ namespace Test\Model;
 
 use \nochso\ORM\Relation;
 
-class Comment extends\nochso \ORM\Model {
+class Comment extends\nochso \ORM\Model
+{
 
     protected static $_primaryKey = 'cid';
     protected static $_tableName = 'comment';
@@ -16,5 +17,4 @@ class Comment extends\nochso \ORM\Model {
     public $comment;
     // Relations
     public $user;
-
 }

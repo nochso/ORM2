@@ -10,9 +10,11 @@ require("lib/autoload.php");
 //use Test\Model\UserRole;
 //use Test\Model\Dummy;
 
-class ModelTest extends PHPUnit_Framework_TestCase {
+class ModelTest extends PHPUnit_Framework_TestCase
+{
 
-    public static function setUpBeforeClass() {
+    public static function setUpBeforeClass()
+    {
         DBA::connect('sqlite::memory:', '', '');
         DBA::execute('CREATE TABLE comment (
 		  id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,7 +32,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
 		);');
     }
 
-    public function setUp() {
+    public function setUp()
+    {
         DBA::execute('DELETE FROM user');
         DBA::execute('DELETE FROM user_role');
         DBA::execute("DELETE FROM sqlite_sequence WHERE name = 'user'");
@@ -43,7 +46,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\Model::__construct
      */
-    public function testConstructor() {
+    public function testConstructor()
+    {
         // Dummy::$_tableName is null before first instantiation
         $reflection = new \ReflectionProperty('Test\Model\Dummy', '_tableName');
         $reflection->setAccessible(true);
@@ -78,7 +82,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\Model::select
      */
-    public function testSelect() {
+    public function testSelect()
+    {
         // Should dispense a Model instance
         $user = User::select();
         $this->selectHelper($user);
@@ -87,7 +92,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\Model::dispense
      */
-    public function testDispense() {
+    public function testDispense()
+    {
         $user = new User();
 
         // Test the non-static alias
@@ -95,7 +101,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
         $this->selectHelper($user2);
     }
 
-    public function selectHelper($user) {
+    public function selectHelper($user)
+    {
         $this->assertEquals(get_class($user), 'Test\Model\User');
 
         // Should prepare the query builder with the select column
@@ -118,7 +125,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\Model::save
      */
-    public function testSave() {
+    public function testSave()
+    {
         // Insert new user, should fill the primary key after insert
         $user = new User();
         $user->name = "save tester";
@@ -142,7 +150,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
      * @expectedException Exception
      * @expectedExceptionMessage Can not update existing row of table user without knowing the primary key.
      */
-    public function testSaveException() {
+    public function testSaveException()
+    {
         $user = User::select()->one();
         unset($user->id);
         $user->save();
@@ -151,7 +160,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\Model::toAssoc
      */
-    public function testToAssoc() {
+    public function testToAssoc()
+    {
         $user = User::select()->one();
 
         $assoc = $user->toAssoc();
@@ -162,7 +172,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\Model::getPrimaryKeyValue
      */
-    public function testGetPrimaryKeyValue() {
+    public function testGetPrimaryKeyValue()
+    {
         $user = new User(1);
         $this->assertEquals($user->getPrimaryKeyValue(), 1);
         $newUser = new User();
@@ -172,7 +183,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\Model::hydrate
      */
-    public function testHydrate() {
+    public function testHydrate()
+    {
         $user = new User();
         $data = ['id' => 'value', 'name' => 'value2'];
         $user->hydrate($data);
@@ -183,7 +195,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\Model::one
      */
-    public function testOne() {
+    public function testOne()
+    {
         $user = User::select()->eq('id', 'x')->one();
         $this->assertNull($user);
         $user = User::select()->eq('id', 1)->one();
@@ -193,7 +206,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\Model::all
      */
-    public function testAll() {
+    public function testAll()
+    {
         $users = User::select()->eq('id', 'x')->all();
         $this->assertInstanceOf('\nochso\ORM\ResultSet', $users);
         $this->assertCount(0, $users);
@@ -205,7 +219,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\Model::delete
      */
-    public function testDelete() {
+    public function testDelete()
+    {
         // Delete user by filtering
         User::select()->eq('id', 2)->delete();
         $user = new User(2);
@@ -221,7 +236,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\Model::fetchRelations
      */
-    public function testFetchRelations() {
+    public function testFetchRelations()
+    {
         $user = new User(1);
         $this->assertCount(0, $user->comments);
         $this->assertEquals($user->role->id, null);
@@ -233,7 +249,8 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers nochso\ORM\Model::update
      */
-    public function testUpdate() {
+    public function testUpdate()
+    {
         $users = User::select()->all();
         foreach ($users as $user) {
             $this->assertNotEquals($user->name, 'updated name');
@@ -245,5 +262,4 @@ class ModelTest extends PHPUnit_Framework_TestCase {
             $this->assertEquals($user->name, 'updated name');
         }
     }
-
 }
