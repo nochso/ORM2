@@ -156,6 +156,7 @@ class Model {
         $one = null;
         if ($row = $statement->fetch(PDO::FETCH_OBJ)) {
             $one = $this->dispense()->hydrate($row);
+            $one->_isNew = false;
         }
         $statement->closeCursor();
         return $one;
