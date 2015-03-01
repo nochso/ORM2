@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nochso/ORM2.svg?branch=master)](https://travis-ci.org/nochso/ORM2)
+
 # noch.so / ORM2
 
 ## Install via composer
