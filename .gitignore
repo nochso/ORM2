@@ -29,7 +29,8 @@ nbproject/
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -50,3 +51,4 @@ coverage.bat
 test.bat
 .hgignore
 hg.2015-02-19.7z
+vendor/

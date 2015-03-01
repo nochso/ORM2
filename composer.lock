@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "66d0c48c06baf3dbb5239595c9cc4ec5",
+    "hash": "40c7b1edbd86e78ee352a77277f1bd9d",
     "packages": [
         {
             "name": "nesbot/carbon",
@@ -145,16 +145,16 @@
         },
         {
             "name": "fzaninotto/faker",
-            "version": "dev-master",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "a47e8c188d6b6b69ce0211a1347947a620729a42"
+                "reference": "010c7efedd88bf31141a02719f51fb44c732d5a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/a47e8c188d6b6b69ce0211a1347947a620729a42",
-                "reference": "a47e8c188d6b6b69ce0211a1347947a620729a42",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/010c7efedd88bf31141a02719f51fb44c732d5a0",
+                "reference": "010c7efedd88bf31141a02719f51fb44c732d5a0",
                 "shasum": ""
             },
             "require": {
@@ -166,9 +166,7 @@
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4.x-dev"
-                }
+                "branch-alias": []
             },
             "autoload": {
                 "psr-0": {
@@ -191,7 +189,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2014-05-09 10:12:47"
+            "time": "2014-06-04 14:43:02"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
