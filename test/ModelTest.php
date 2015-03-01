@@ -3,7 +3,7 @@ use nochso\ORM\DBA\DBA;
 use Test\Model\Dummy;
 use Test\Model\User;
 
-require("lib/autoload.php");
+//require("lib/autoload.php");
 //use nochso\ORM\Model;
 //use nochso\ORM\DBA\DBA;
 //use Test\Model\User;
