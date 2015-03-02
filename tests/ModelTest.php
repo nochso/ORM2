@@ -231,6 +231,11 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $user->delete();
         $user = new User(1);
         $this->assertNull($user->id);
+
+        // Cover late creation of query builder
+        $user = new User();
+        $user->id = 1;
+        $user->delete();
     }
 
     /**

@@ -4,13 +4,12 @@ use nochso\ORM\DBA\DBA;
 
 class DBATest extends PHPUnit_Framework_TestCase
 {
-
     protected function setUp()
     {
         parent::setUp();
         DBA::connect('sqlite::memory:', '', '');
         DBA::execute(
-                'CREATE TABLE user (
+            'CREATE TABLE user (
 				id      INTEGER PRIMARY KEY AUTOINCREMENT
 						NOT NULL,
 				name    VARCHAR NOT NULL,
@@ -93,7 +92,7 @@ class DBATest extends PHPUnit_Framework_TestCase
         $reflection->setAccessible(true);
         return $reflection->getValue();
     }
-    
+
     /**
      * @covers nochso\ORM\DBA\DBA::connect
      * @expectedException PDOException
@@ -207,5 +206,20 @@ class DBATest extends PHPUnit_Framework_TestCase
     public function testExecuteException()
     {
         DBA::execute("THIS SHOULD FAIL");
+    }
+
+    /**
+     * @covers nochso\ORM\DBA\DBA::escapeLike
+     */
+    public function testEscapeLike()
+    {
+        $this->assertEquals("=_=%",DBA::escapeLike("_%"));
+    }
+
+    /**
+     * @covers nochso\ORM\DBA\DBA::escape
+     */
+    public function testEscape() {
+        $this->assertEquals("''", DBA::escape("'"));
     }
 }
