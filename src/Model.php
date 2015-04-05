@@ -25,7 +25,7 @@ class Model
 
     /**
      *
-     * @param type $columns
+     * @param array|string $columns
      * @return static
      */
     public static function select($columns = null)
@@ -331,7 +331,7 @@ class Model
      * Filter where column equals value
      *
      * @param string $column
-     * @param type $value
+     * @param string $value
      * @return static
      */
     public function eq($column, $value)
@@ -343,7 +343,7 @@ class Model
      * Filter where column equals value
      *
      * @param string $column
-     * @param type $value
+     * @param string $value
      * @return static
      */
     public function where($column, $value)
@@ -355,7 +355,7 @@ class Model
      * Filter where column does not equal value
      *
      * @param string $column
-     * @param type $value
+     * @param string $value
      * @return static
      */
     public function neq($column, $value)
@@ -367,7 +367,7 @@ class Model
      * Filter where column is less than value
      *
      * @param string $column
-     * @param type $value
+     * @param string $value
      * @return static
      */
     public function lt($column, $value)
@@ -379,7 +379,7 @@ class Model
      * Filter where column is less than or equal value
      *
      * @param string $column
-     * @param type $value
+     * @param string $value
      * @return static
      */
     public function lte($column, $value)
@@ -391,7 +391,7 @@ class Model
      * Filter where column is greater than value
      *
      * @param string $column
-     * @param type $value
+     * @param string $value
      * @return static
      */
     public function gt($column, $value)
@@ -403,7 +403,7 @@ class Model
      * Filter where column is greater than or equal value
      *
      * @param string $column
-     * @param type $value
+     * @param string $value
      * @return static
      */
     public function gte($column, $value)
@@ -439,7 +439,7 @@ class Model
      * Filter where column matches value using the LIKE operator
      *
      * @param string $column
-     * @param type $value
+     * @param string $value
      * @return static
      */
     public function like($column, $value)
@@ -451,7 +451,7 @@ class Model
      * Filter where column does not match value using the LIKE operator
      *
      * @param string $column
-     * @param type $value
+     * @param string $value
      * @return static
      */
     public function notLike($column, $value)
