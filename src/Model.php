@@ -238,7 +238,10 @@ class Model
         $statement = $this->_queryBuilder->getStatement();
         if ($this->_isNew) {
             $primaryKey = $this->getPrimaryKey();
-            $this->$primaryKey = DBA::lastInsertID();
+            // Keep the primary key if it was already set
+            if ($this->$primaryKey === null) {
+                $this->$primaryKey = DBA::lastInsertID();
+            }
             $this->_isNew = false;
         }
         $statement->closeCursor();
