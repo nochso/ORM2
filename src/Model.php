@@ -569,11 +569,11 @@ class Model
      * Return the count of values
      *
      * @param string $column
-     * @return static
+     * @return int
      */
     public function count($column = '*')
     {
-        return $this->_queryBuilder->getAggregateColumn('COUNT', $column);
+        return (int)$this->_queryBuilder->getAggregateColumn('COUNT', $column);
     }
 
     /**
