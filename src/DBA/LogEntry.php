@@ -21,7 +21,7 @@ class LogEntry
 
     /**
      * Create and begin a new log entry
-     * 
+     *
      * @param array $data Hash map with parameter names as keys
      * @param string $statement SQL statement optionally with parameters
      */
@@ -55,7 +55,7 @@ class LogEntry
     /**
      * Returns a readable SQL statement with the parameters merged inline.
      * Both numeric and hashed arrays work, but they can't be mixed.
-     * 
+     *
      * @return string
      */
     public function getPrettyStatement()
@@ -73,8 +73,8 @@ class LogEntry
     }
 
     /**
-     * Replace only the first occurrence of a string 
-     * 
+     * Replace only the first occurrence of a string
+     *
      * @param string $search
      * @param string $replace
      * @param string $subject

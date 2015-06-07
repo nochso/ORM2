@@ -6,7 +6,6 @@ use Test\Model\User;
 
 class ResultSetTest extends PHPUnit_Framework_TestCase
 {
-
     public static function setUpBeforeClass()
     {
         DBA::connect('sqlite::memory:', '', '');

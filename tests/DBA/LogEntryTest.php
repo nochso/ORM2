@@ -5,7 +5,6 @@ use nochso\ORM\DBA\LogEntry;
 
 class LogEntryTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @covers \nochso\ORM\DBA\LogEntry::__construct
      */

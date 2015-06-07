@@ -6,7 +6,6 @@ use nochso\ORM\DBA\DBA as DBA;
 
 class QueryBuilder
 {
-
     private $tableName;
     private $where = array();
     private $limit;

@@ -4,7 +4,6 @@ namespace nochso\ORM;
 
 class Relation implements \Iterator, \ArrayAccess, \Countable
 {
-
     // The type of relation
     const HAS_MANY = 0;
     const HAS_ONE = 1;

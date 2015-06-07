@@ -6,7 +6,6 @@ use \nochso\ORM\Relation;
 
 class User extends \nochso\ORM\Model
 {
-
     protected static $_tableName = 'user';
     protected static $_relations = array(
         'comments' => array(Relation::HAS_MANY, 'Test\Model\Comment'),

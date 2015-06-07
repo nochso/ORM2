@@ -6,7 +6,6 @@ use PDO;
 
 class DBA
 {
-
     /**
      * @var PDO $pdo
      */
@@ -47,10 +46,10 @@ class DBA
 
     /**
      * SQLite dialog: escaping of wild card characters
-     * 
+     *
      * @param string $string Unsafe input
      * @param string $escapeChar
-     * 
+     *
      * @return string
      */
     public static function escapeLike($string, $escapeChar = '=')
@@ -63,7 +62,7 @@ class DBA
             ],
             [
                 $escapeChar . $escapeChar,
-                $escapeChar . '_', 
+                $escapeChar . '_',
                 $escapeChar . '%'
             ],
             $string

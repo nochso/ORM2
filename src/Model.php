@@ -8,7 +8,6 @@ use \nochso\ORM\Relation;
 
 class Model
 {
-
     /**
      * Static properties shared by Model classes
      */

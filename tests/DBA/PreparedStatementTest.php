@@ -2,7 +2,6 @@
 
 class PreparedStatementTest extends PHPUnit_Framework_TestCase
 {
-    
     public function getPDO()
     {
         $pdo = new PDO('sqlite::memory:', '', '');

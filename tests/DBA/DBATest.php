@@ -213,13 +213,14 @@ class DBATest extends PHPUnit_Framework_TestCase
      */
     public function testEscapeLike()
     {
-        $this->assertEquals("=_=%",DBA::escapeLike("_%"));
+        $this->assertEquals("=_=%", DBA::escapeLike("_%"));
     }
 
     /**
      * @covers nochso\ORM\DBA\DBA::escape
      */
-    public function testEscape() {
+    public function testEscape()
+    {
         $this->assertEquals("''", DBA::escape("'"));
     }
 }
