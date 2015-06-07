@@ -89,11 +89,21 @@ class Model
         return static::$_tableName;
     }
 
+    /**
+     * Returns the name of the primary key property
+     *
+     * @return string
+     */
     public function getPrimaryKey()
     {
         return static::$_primaryKey;
     }
 
+    /**
+     * Returns the value of the primary key
+     *
+     * @return null
+     */
     public function getPrimaryKeyValue()
     {
         $primaryKey = $this->getPrimaryKey();
