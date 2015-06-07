@@ -11,7 +11,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
     {
         DBA::connect('sqlite::memory:', '', '');
         DBA::execute('CREATE TABLE comment (
-		  cid INTEGER PRIMARY KEY AUTOINCREMENT,
+		  id INTEGER PRIMARY KEY AUTOINCREMENT,
 		  user_id INTEGER,
 		  comment TEXT
 		)');

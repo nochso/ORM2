@@ -147,6 +147,17 @@ class ModelTest extends PHPUnit_Framework_TestCase
 
     /**
      * @covers nochso\ORM\Model::save
+     */
+    public function testSaveChosenPrimaryKey()
+    {
+        $user = new \Test\Model\Comment();
+        $user->id = 99;
+        $user->save();
+        $this->assertEquals(99, $user->id);
+    }
+
+    /**
+     * @covers nochso\ORM\Model::save
      * @expectedException Exception
      * @expectedExceptionMessage Can not update existing row of table user without knowing the primary key.
      */
