@@ -36,10 +36,10 @@ class ModelTest extends PHPUnit_Framework_TestCase
         DBA::execute('DELETE FROM user');
         DBA::execute('DELETE FROM user_role');
         DBA::execute("DELETE FROM sqlite_sequence WHERE name = 'user'");
-        DBA::execute('INSERT INTO user (name, role_id) VALUES(?, ?)', ['Abed', 1]);
-        DBA::execute('INSERT INTO user (name, role_id) VALUES(?, ?)', ['Dean', 2]);
-        DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', [1, 'User']);
-        DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', [2, 'Admin']);
+        DBA::execute('INSERT INTO user (name, role_id) VALUES(?, ?)', array('Abed', 1));
+        DBA::execute('INSERT INTO user (name, role_id) VALUES(?, ?)', array('Dean', 2));
+        DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', array(1, 'User'));
+        DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', array(2, 'Admin'));
     }
 
     /**
@@ -175,7 +175,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $user = User::select()->one();
 
         $assoc = $user->toAssoc();
-        $expectedAssoc = ['id' => 1, 'name' => 'Abed', 'role_id' => 1];
+        $expectedAssoc = array('id' => 1, 'name' => 'Abed', 'role_id' => 1);
         $this->assertEquals($assoc, $expectedAssoc);
     }
 
@@ -196,7 +196,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     public function testHydrate()
     {
         $user = new User();
-        $data = ['id' => 'value', 'name' => 'value2'];
+        $data = array('id' => 'value', 'name' => 'value2');
         $user->hydrate($data);
         $this->assertEquals('value', $user->id);
         $this->assertEquals('value2', $user->name);
@@ -271,7 +271,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertNotEquals($user->name, 'updated name');
         }
 
-        User::select()->update(['name' => 'updated name']);
+        User::select()->update(array('name' => 'updated name'));
         $users = User::select()->all();
         foreach ($users as $user) {
             $this->assertEquals($user->name, 'updated name');

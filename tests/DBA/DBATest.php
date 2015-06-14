@@ -138,7 +138,7 @@ class DBATest extends PHPUnit_Framework_TestCase
      */
     public function testAddLog()
     {
-        $data = ['foo'];
+        $data = array('foo');
         $statement = 'SELECT * FROM test';
         $entry = new nochso\ORM\DBA\LogEntry($data, $statement);
         $entry->finish();
@@ -188,7 +188,7 @@ class DBATest extends PHPUnit_Framework_TestCase
         // INSERT and check it has been logged
         $username = 'username';
         $sql = "INSERT INTO user (name, role_id) VALUES (?, ?)";
-        DBA::execute($sql, [$username, 1]);
+        DBA::execute($sql, array($username, 1));
         $log = DBA::getLog();
         $lastEntry = end($log);
         $this->assertEquals($lastEntry->statement, $sql);
