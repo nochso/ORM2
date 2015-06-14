@@ -303,13 +303,6 @@ class Model
     {
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
-                /* if (strpos($key, 'date') !== false) {
-                    try {
-                        $value = \Carbon\Carbon::createFromFormat(\Carbon\Carbon::RFC3339, $value);
-                        $value->setTimezone(date_default_timezone_get());
-                    } catch (Exception $e) {
-                    }
-                } */
                 $this->$key = $value;
             } else {
                 $this->_extra[$key] = $value;
