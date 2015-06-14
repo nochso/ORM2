@@ -11,7 +11,7 @@ composer.json without packagist:
     "url":  "https://github.com/nochso/ORM2.git"
   }],
     "require": {
-  		"nochso/ORM": "@dev"
+  		"nochso/ORM": "~1.3"
     }
 }
 ```
