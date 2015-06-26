@@ -53,3 +53,4 @@ test.bat
 hg.2015-02-19.7z
 vendor/
 .idea/
+composer.lock
