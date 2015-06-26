@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/nochso/ORM2.svg?branch=master)](https://travis-ci.org/nochso/ORM2)
-
 # noch.so / ORM2
+[![Build Status](https://travis-ci.org/nochso/ORM2.svg?branch=master)](https://travis-ci.org/nochso/ORM2)
+[![Dependency Status](https://www.versioneye.com/user/projects/558dbedf316338001e000017/badge.svg?style=flat)](https://www.versioneye.com/user/projects/558dbedf316338001e000017)
 
 ## Install via composer
 composer.json without packagist:
