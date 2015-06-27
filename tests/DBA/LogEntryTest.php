@@ -38,7 +38,7 @@ class LogEntryTest extends PHPUnit_Framework_TestCase
     /**
      * @covers \nochso\ORM\DBA\LogEntry::__toString
      * @covers \nochso\ORM\DBA\LogEntry::getPrettyStatement
-     * @covers \nochso\ORM\DBA\LogEntry::str_replace_once
+     * @covers \nochso\ORM\DBA\LogEntry::strReplaceOnce
      */
     public function testToString()
     {
@@ -52,7 +52,7 @@ class LogEntryTest extends PHPUnit_Framework_TestCase
     /**
      * @covers \nochso\ORM\DBA\LogEntry::__toString
      * @covers \nochso\ORM\DBA\LogEntry::getPrettyStatement
-     * @covers \nochso\ORM\DBA\LogEntry::str_replace_once
+     * @covers \nochso\ORM\DBA\LogEntry::strReplaceOnce
      */
     public function testToStringIndex()
     {

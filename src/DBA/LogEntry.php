@@ -64,7 +64,7 @@ class LogEntry
         $statement = $this->statement;
         foreach ($this->data as $key => $value) {
             if (is_numeric($key)) {
-                $statement = $this->str_replace_once('?', "'" . $value . "'", $statement);
+                $statement = $this->strReplaceOnce('?', "'" . $value . "'", $statement);
             } else {
                 $statement = str_replace($key, "'" . $value . "'", $statement);
             }
@@ -81,7 +81,7 @@ class LogEntry
      *
      * @return string
      */
-    private function str_replace_once($search, $replace, $subject)
+    private function strReplaceOnce($search, $replace, $subject)
     {
         $firstChar = strpos($subject, $search);
         if ($firstChar !== false) {
