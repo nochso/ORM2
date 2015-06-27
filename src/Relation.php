@@ -31,7 +31,7 @@ class Relation implements \Iterator, \ArrayAccess, \Countable
 
     private function init()
     {
-        if ($this->foreign == null) {
+        if ($this->foreign === null) {
             $this->foreign = new $this->foreignClass();
         }
     }
