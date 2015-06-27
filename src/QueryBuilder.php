@@ -13,7 +13,6 @@ class QueryBuilder
     private $order = array();
     private $parameters = array();
     private $parameterCount = 0;
-    private $sql;
     private $queryType;
     private $modelData;
     private $selectColumns = array();
@@ -109,7 +108,6 @@ class QueryBuilder
         $this->order = array();
         $this->parameters = array();
         $this->parameterCount = 0;
-        $this->sql = null;
         $this->queryType = null;
         $this->modelData = null;
         $this->selectColumns = array();

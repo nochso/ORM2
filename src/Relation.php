@@ -26,7 +26,6 @@ class Relation implements \Iterator, \ArrayAccess, \Countable
         $this->foreignClass = $foreignClass;
         $this->owner = $ownerInstance;
         $this->ownerKey = $ownerKey;
-        // $this->foreignKey = $ownerKey;
         $this->foreignKey = $foreignKey;
     }
 

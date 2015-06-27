@@ -5,9 +5,6 @@ namespace nochso\ORM\DBA;
 use PDO;
 use PDOStatement;
 
-//use ORM\DBA as DBA;
-//use ORM\DBA\LogEntry;
-
 class PreparedStatement extends PDOStatement
 {
     private $pdo;
