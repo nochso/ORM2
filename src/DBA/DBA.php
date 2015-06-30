@@ -74,6 +74,11 @@ class DBA
         return str_replace("'", "''", $string);
     }
 
+    /**
+     * Returns the ID of the last inserted row or sequence value
+     * @link http://php.net/manual/en/pdo.lastinsertid.php
+     * @return string
+     */
     public static function lastInsertID()
     {
         return self::$pdo->lastInsertID();
@@ -94,20 +99,32 @@ class DBA
         return self::$pdo->rollBack();
     }
 
+    /**
+     * @param LogEntry $entry
+     */
     public static function addLog($entry)
     {
         self::$log[] = $entry;
     }
 
-    public static function getLog($flush = false)
+    /**
+     * Returns all log entries and optionally removes them
+     *
+     * @param bool $empty
+     * @return LogEntry[]
+     */
+    public static function getLog($empty = false)
     {
         $log = self::$log;
-        if ($flush) {
+        if ($empty) {
             self::emptyLog();
         }
         return $log;
     }
 
+    /**
+     * Remove all log entries
+     */
     public static function emptyLog()
     {
         self::$log = array();
