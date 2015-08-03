@@ -40,7 +40,6 @@ class PreparedStatementTest extends PHPUnit_Framework_TestCase
     /**
      * @covers nochso\ORM\DBA\PreparedStatement::execute
      * @expectedException PDOException
-     * @expectedExceptionCode HY000
      * @expectedExceptionMessage General error: 17 database schema has changed
      */
     public function testExecuteException()
