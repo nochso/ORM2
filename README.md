@@ -118,7 +118,7 @@ Deprecated for once-stable features removed in upcoming releases.
 - Fix name spaces in tests, 100% pass but needs more coverage
 - Fixed emptying of primary key when saving new Model with set primary key
 
-[unreleased]: https://github.com/nochso/orm/compare/v1.3.2...HEAD
-[1.3.2]: https://github.com/nochso/orm/compare/v1.3.1...v1.3.2
-[1.3.1]: https://github.com/nochso/orm/compare/v1.3.0...v1.3.1
-[1.3.0]: https://github.com/nochso/orm/compare/v1.2.0...v1.3.0
+[unreleased]: https://github.com/nochso/ORM2/compare/1.3.2...HEAD
+[1.3.2]: https://github.com/nochso/ORM2/compare/1.3.1...1.3.2
+[1.3.1]: https://github.com/nochso/ORM2/compare/1.3.0...1.3.1
+[1.3.0]: https://github.com/nochso/ORM2/compare/1.2.0...1.3.0
