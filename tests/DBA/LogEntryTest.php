@@ -60,6 +60,16 @@ class LogEntryTest extends PHPUnit_Framework_TestCase
         $statement = 'SELECT * FROM user WHERE name = ?';
         $entry = new LogEntry($data, $statement);
         $entry->finish();
-        $this->assertContains("SELECT * FROM user WHERE name = 'value'", (string)$entry);
+        $this->assertContains("SELECT * FROM user WHERE name = 'value'", (string) $entry);
+    }
+
+    public function testToStringMany()
+    {
+        $ids = range(1, 12);
+        $users = \Test\Model\User::select()->in('id', $ids)->all();
+        $log = DBA::getLog();
+        $last = end($log);
+        $expected = "0.000s	SELECT * FROM `user` WHERE id IN ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12')\n";
+        $this->assertEquals($expected, (string) $last);
     }
 }
