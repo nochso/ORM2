@@ -2,9 +2,9 @@
 
 namespace nochso\ORM;
 
+use nochso\ORM\Relation;
 use nochso\ORM\DBA\DBA;
 use PDO;
-use \nochso\ORM\Relation;
 
 class Model
 {
@@ -24,7 +24,7 @@ class Model
 
     /**
      *
-     * @param array|string $columns
+     * @param  array|string $columns
      * @return static
      */
     public static function select($columns = null)
@@ -145,8 +145,8 @@ class Model
 
     /**
      *
-     * @param int|string $id optional
-     * @return static One model instance or null if nothing was found.
+     * @param  int|string $id optional
+     * @return static     One model instance or null if nothing was found.
      */
     public function one($id = null)
     {
@@ -166,8 +166,8 @@ class Model
 
     /**
      * @param $sql
-     * @param null|array $params Optional parameter array for PDO statement
-     * @return static One model instance or null if nothing was found.
+     * @param  null|array $params Optional parameter array for PDO statement
+     * @return static     One model instance or null if nothing was found.
      */
     public function oneSQL($sql, $params = null)
     {
@@ -187,8 +187,8 @@ class Model
 
     /**
      *
-     * @param string $sql optional
-     * @param array $params optional
+     * @param  string                $sql    optional
+     * @param  array                 $params optional
      * @return \nochso\ORM\ResultSet
      */
     public function all($sql = null, $params = null)
@@ -290,10 +290,10 @@ class Model
      *
      * Properties that do not exist in the current context are ignored.
      *
-     * @param array $data Associative array
-     * @param bool $removePrimaryKey Optional: If true, the primary key of the
-     * model will be unset. This is useful for hydrating a new object
-     * and the source ($_POST) erroneously supplies a primary key.
+     * @param array $data             Associative array
+     * @param bool  $removePrimaryKey Optional: If true, the primary key of the
+     *                                model will be unset. This is useful for hydrating a new object
+     *                                and the source ($_POST) erroneously supplies a primary key.
      *
      * Default: false
      * @return static
@@ -335,8 +335,8 @@ class Model
     /**
      * Filter where column equals value
      *
-     * @param string $column
-     * @param string $value
+     * @param  string $column
+     * @param  string $value
      * @return static
      */
     public function eq($column, $value)
@@ -347,8 +347,8 @@ class Model
     /**
      * Filter where column equals value
      *
-     * @param string $column
-     * @param string $value
+     * @param  string $column
+     * @param  string $value
      * @return static
      */
     public function where($column, $value)
@@ -359,8 +359,8 @@ class Model
     /**
      * Filter where column does not equal value
      *
-     * @param string $column
-     * @param string $value
+     * @param  string $column
+     * @param  string $value
      * @return static
      */
     public function neq($column, $value)
@@ -371,8 +371,8 @@ class Model
     /**
      * Filter where column is less than value
      *
-     * @param string $column
-     * @param string $value
+     * @param  string $column
+     * @param  string $value
      * @return static
      */
     public function lt($column, $value)
@@ -383,8 +383,8 @@ class Model
     /**
      * Filter where column is less than or equal value
      *
-     * @param string $column
-     * @param string $value
+     * @param  string $column
+     * @param  string $value
      * @return static
      */
     public function lte($column, $value)
@@ -395,8 +395,8 @@ class Model
     /**
      * Filter where column is greater than value
      *
-     * @param string $column
-     * @param string $value
+     * @param  string $column
+     * @param  string $value
      * @return static
      */
     public function gt($column, $value)
@@ -407,8 +407,8 @@ class Model
     /**
      * Filter where column is greater than or equal value
      *
-     * @param string $column
-     * @param string $value
+     * @param  string $column
+     * @param  string $value
      * @return static
      */
     public function gte($column, $value)
@@ -419,8 +419,8 @@ class Model
     /**
      * Filter where column matches list of values
      *
-     * @param string $column
-     * @param array $values
+     * @param  string $column
+     * @param  array  $values
      * @return static
      */
     public function in($column, $values)
@@ -431,8 +431,8 @@ class Model
     /**
      * Filter where column does not match any of the value
      *
-     * @param string $column
-     * @param array $values
+     * @param  string $column
+     * @param  array  $values
      * @return static
      */
     public function notIn($column, $values)
@@ -443,8 +443,8 @@ class Model
     /**
      * Filter where column matches value using the LIKE operator
      *
-     * @param string $column
-     * @param string $value
+     * @param  string $column
+     * @param  string $value
      * @return static
      */
     public function like($column, $value)
@@ -455,8 +455,8 @@ class Model
     /**
      * Filter where column does not match value using the LIKE operator
      *
-     * @param string $column
-     * @param string $value
+     * @param  string $column
+     * @param  string $value
      * @return static
      */
     public function notLike($column, $value)
@@ -467,7 +467,7 @@ class Model
     /**
      * Filter where column is SQL NULL
      *
-     * @param string $column
+     * @param  string $column
      * @return static
      */
     public function isNull($column)
@@ -478,7 +478,7 @@ class Model
     /**
      * Filter where column is not SQL NULL
      *
-     * @param string $column
+     * @param  string $column
      * @return static
      */
     public function notNull($column)
@@ -489,8 +489,8 @@ class Model
     /**
      * Limit the amount of maximum rows returned
      *
-     * @param int $limit
-     * @param int $offset
+     * @param  int    $limit
+     * @param  int    $offset
      * @return static
      */
     public function limit($limit, $offset = null)
@@ -502,7 +502,7 @@ class Model
     /**
      * Offset the result in combination with $this->limit()
      *
-     * @param int $offset
+     * @param  int    $offset
      * @return static
      */
     public function offset($offset)
@@ -514,7 +514,7 @@ class Model
     /**
      * Sort the results by ascending order
      *
-     * @param string $column
+     * @param  string $column
      * @return static
      */
     public function orderAsc($column)
@@ -526,7 +526,7 @@ class Model
     /**
      * Sort the results by descending order
      *
-     * @param string $column
+     * @param  string $column
      * @return static
      */
     public function orderDesc($column)
@@ -538,7 +538,7 @@ class Model
     /**
      * Return the average value
      *
-     * @param string $column
+     * @param  string $column
      * @return static
      */
     public function avg($column)
@@ -549,7 +549,7 @@ class Model
     /**
      * Return the sum of values
      *
-     * @param string $column
+     * @param  string $column
      * @return static
      */
     public function sum($column)
@@ -560,7 +560,7 @@ class Model
     /**
      * Return the count of values
      *
-     * @param string $column
+     * @param  string $column
      * @return int
      */
     public function count($column = '*')
@@ -571,7 +571,7 @@ class Model
     /**
      * Return the minimum of values
      *
-     * @param string $column
+     * @param  string $column
      * @return static
      */
     public function min($column)
@@ -582,7 +582,7 @@ class Model
     /**
      * Return the maximum of values
      *
-     * @param string $column
+     * @param  string $column
      * @return static
      */
     public function max($column)

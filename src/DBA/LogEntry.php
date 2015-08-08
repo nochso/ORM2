@@ -22,7 +22,7 @@ class LogEntry
     /**
      * Create and begin a new log entry
      *
-     * @param array $data Hash map with parameter names as keys
+     * @param array  $data      Hash map with parameter names as keys
      * @param string $statement SQL statement optionally with parameters
      */
     public function __construct($data, $statement)

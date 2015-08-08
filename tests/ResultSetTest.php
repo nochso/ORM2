@@ -1,7 +1,7 @@
 <?php
 
-use nochso\ORM\ResultSet;
 use nochso\ORM\DBA\DBA;
+use nochso\ORM\ResultSet;
 use Test\Model\User;
 
 class ResultSetTest extends PHPUnit_Framework_TestCase

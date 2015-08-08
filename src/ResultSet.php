@@ -2,8 +2,6 @@
 
 namespace nochso\ORM;
 
-use nochso\ORM\Relation;
-
 class ResultSet implements \Iterator, \ArrayAccess, \Countable
 {
     protected $rows = array();

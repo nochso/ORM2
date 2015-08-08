@@ -33,7 +33,7 @@ class DBA
 
     /**
      * @param string $sql
-     * @param array $data optional
+     * @param array  $data optional
      *
      * @return \PDOStatement
      */
@@ -47,7 +47,7 @@ class DBA
     /**
      * SQLite dialog: escaping of wild card characters
      *
-     * @param string $string Unsafe input
+     * @param string $string     Unsafe input
      * @param string $escapeChar
      *
      * @return string
@@ -58,12 +58,12 @@ class DBA
             array(
                 $escapeChar,
                 '_',
-                '%'
+                '%',
             ),
             array(
                 $escapeChar . $escapeChar,
                 $escapeChar . '_',
-                $escapeChar . '%'
+                $escapeChar . '%',
             ),
             $string
         );
@@ -110,7 +110,7 @@ class DBA
     /**
      * Returns all log entries and optionally removes them
      *
-     * @param bool $empty
+     * @param  bool       $empty
      * @return LogEntry[]
      */
     public static function getLog($empty = false)
