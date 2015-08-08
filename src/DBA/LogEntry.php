@@ -47,8 +47,8 @@ class LogEntry
      */
     public function __toString()
     {
-        $s = round($this->duration, 3) . 's ';
-        $s .= ' <b>' . $this->getPrettyStatement() . '</b><br />';
+        $s = number_format($this->duration, 3) . "s\t";
+        $s .= $this->getPrettyStatement() . "\n";
         return $s;
     }
 
@@ -60,14 +60,27 @@ class LogEntry
      */
     public function getPrettyStatement()
     {
-        // Merge parameters into SQL statement
+        $assoc = array();
         $statement = $this->statement;
         foreach ($this->data as $key => $value) {
             if (is_numeric($key)) {
                 $statement = $this->strReplaceOnce('?', "'" . $value . "'", $statement);
             } else {
-                $statement = str_replace($key, "'" . $value . "'", $statement);
+                $assoc[] = $key;
             }
+        }
+        // Sort non-numeric keys descending by their string length.
+        usort($assoc, function ($a, $b) {
+            $alen = strlen($a);
+            $blen = strlen($b);
+            if ($a === $b) {
+                return 0;
+            }
+            return $a > $b ? -1 : 1;
+        });
+        // Replace the longest keys first. This avoids conflicts/overlaps of shorter keys.
+        foreach ($assoc as $key) {
+            $statement = str_replace($key, "'" . $this->data[$key] . "'", $statement);
         }
         return $statement;
     }
