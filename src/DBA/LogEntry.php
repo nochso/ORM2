@@ -73,10 +73,10 @@ class LogEntry
         usort($assoc, function ($a, $b) {
             $alen = strlen($a);
             $blen = strlen($b);
-            if ($a === $b) {
+            if ($alen === $blen) {
                 return 0;
             }
-            return $a > $b ? -1 : 1;
+            return $alen > $blen ? -1 : 1;
         });
         // Replace the longest keys first. This avoids conflicts/overlaps of shorter keys.
         foreach ($assoc as $key) {
