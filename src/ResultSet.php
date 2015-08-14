@@ -67,7 +67,7 @@ class ResultSet implements \Iterator, \ArrayAccess, \Countable
     }
 
     /**
-     * Returns an array of all primary key values contained in the ResultSet
+     * Returns an array of all primary keys contained in the ResultSet
      *
      * @return array
      */
@@ -80,6 +80,16 @@ class ResultSet implements \Iterator, \ArrayAccess, \Countable
             }
         }
         return $ids;
+    }
+
+    /**
+     * Returns the results as a zero indexed array
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return array_values($this->rows);
     }
 
     public function fetchRelations()

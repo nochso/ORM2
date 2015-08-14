@@ -82,6 +82,10 @@ Deprecated for once-stable features removed in upcoming releases.
 ### Security
 - Proper quoting of identifiers for different SQL dialects
 
+## [1.3.4] - 2015-08-14
+### Added
+- Add method toArray() in ResultSet for getting a zero indexed array
+
 ## [1.3.3] - 2015-08-10
 ### Changed
 - Bump phpunit from 4.7 to 4.8
@@ -125,7 +129,8 @@ Deprecated for once-stable features removed in upcoming releases.
 - Fix name spaces in tests, 100% pass but needs more coverage
 - Fixed emptying of primary key when saving new Model with set primary key
 
-[unreleased]: https://github.com/nochso/ORM2/compare/1.3.3...HEAD
+[unreleased]: https://github.com/nochso/ORM2/compare/1.3.4...HEAD
+[1.3.4]: https://github.com/nochso/ORM2/compare/1.3.3...1.3.4
 [1.3.3]: https://github.com/nochso/ORM2/compare/1.3.2...1.3.3
 [1.3.2]: https://github.com/nochso/ORM2/compare/1.3.1...1.3.2
 [1.3.1]: https://github.com/nochso/ORM2/compare/1.3.0...1.3.1

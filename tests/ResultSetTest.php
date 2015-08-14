@@ -63,6 +63,20 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \nochso\ORM\ResultSet::toArray
+     */
+    public function testToArray()
+    {
+        $array = User::select()
+            ->all()
+            ->toArray();
+        $this->assertEquals('array', gettype($array));
+        $this->assertCount(2, $array);
+        $this->assertArrayHasKey(0, $array);
+        $this->assertArrayHasKey(1, $array);
+    }
+
+    /**
      * @covers nochso\ORM\ResultSet::getPrimaryKeyList
      */
     public function testGetPrimaryKeyList()
