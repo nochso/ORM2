@@ -2,7 +2,6 @@
 
 namespace nochso\ORM;
 
-use nochso\ORM\Relation;
 use nochso\ORM\DBA\DBA;
 use PDO;
 

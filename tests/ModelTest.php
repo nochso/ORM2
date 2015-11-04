@@ -260,7 +260,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($user->role->id, null);
         $user->fetchRelations();
         $this->assertEquals($user->role->id, 1);
-        $this->assertEquals(['1'], $user->comments->getPrimaryKeyList());
+        $this->assertEquals(array('1'), $user->comments->getPrimaryKeyList());
         $this->assertEquals($user->role->description, 'User');
     }
 
