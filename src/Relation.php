@@ -122,9 +122,14 @@ class Relation implements \Iterator, \ArrayAccess, \Countable
         $this->data->$name = $value;
     }
 
+    /**
+     * @param  string $name
+     * @param  mixed  $arguments
+     * @return mixed
+     */
     public function __call($name, $arguments)
     {
-        call_user_func_array(array($this->data, $name), $arguments);
+        return call_user_func_array(array($this->data, $name), $arguments);
     }
 
     /**

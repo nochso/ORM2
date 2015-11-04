@@ -76,11 +76,10 @@ Deprecated for once-stable features removed in upcoming releases.
   Security to invite users to upgrade in case of vulnerabilities. -->
 
 ## [Unreleased][unreleased]
-### Added
-- Extension of Model for nested set functionality
 
-### Security
-- Proper quoting of identifiers for different SQL dialects
+## [1.3.5] - 2015-11-04
+### Fixed
+- Fix `Relation::__call` not returning return value
 
 ## [1.3.4] - 2015-08-14
 ### Added
@@ -129,7 +128,8 @@ Deprecated for once-stable features removed in upcoming releases.
 - Fix name spaces in tests, 100% pass but needs more coverage
 - Fixed emptying of primary key when saving new Model with set primary key
 
-[unreleased]: https://github.com/nochso/ORM2/compare/1.3.4...HEAD
+[unreleased]: https://github.com/nochso/ORM2/compare/1.3.5...HEAD
+[1.3.5]: https://github.com/nochso/ORM2/compare/1.3.4...1.3.5
 [1.3.4]: https://github.com/nochso/ORM2/compare/1.3.3...1.3.4
 [1.3.3]: https://github.com/nochso/ORM2/compare/1.3.2...1.3.3
 [1.3.2]: https://github.com/nochso/ORM2/compare/1.3.1...1.3.2

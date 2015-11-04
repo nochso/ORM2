@@ -35,9 +35,11 @@ class ModelTest extends PHPUnit_Framework_TestCase
     {
         DBA::execute('DELETE FROM user');
         DBA::execute('DELETE FROM user_role');
-        DBA::execute("DELETE FROM sqlite_sequence WHERE name = 'user'");
+        DBA::execute('DELETE FROM comment');
+        DBA::execute("DELETE FROM sqlite_sequence WHERE name IN ('user', 'comment')");
         DBA::execute('INSERT INTO user (name, role_id) VALUES(?, ?)', array('Abed', 1));
         DBA::execute('INSERT INTO user (name, role_id) VALUES(?, ?)', array('Dean', 2));
+        DBA::execute('INSERT INTO comment (user_id, comment) VALUES(?, ?)', array(1, 'Hi'));
         DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', array(1, 'User'));
         DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', array(2, 'Admin'));
     }
@@ -258,6 +260,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($user->role->id, null);
         $user->fetchRelations();
         $this->assertEquals($user->role->id, 1);
+        $this->assertEquals(['1'], $user->comments->getPrimaryKeyList());
         $this->assertEquals($user->role->description, 'User');
     }
 
