@@ -2,22 +2,27 @@
 [![Build Status](https://travis-ci.org/nochso/ORM2.svg?branch=master)](https://travis-ci.org/nochso/ORM2)
 [![Dependency Status](https://www.versioneye.com/user/projects/558dc123316338001e00001a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/558dc123316338001e00001a)
 
-## Install via composer
-composer.json without packagist:
-```javascript
-{
-  "repositories": [{
-    "type": "vcs",
-    "url":  "https://github.com/nochso/ORM2.git"
-  }],
-    "require": {
-  		"nochso/orm": "~1.3"
-    }
-}
+A stable ActiveRecord implementation:
+ 
+- fluent query builder
+- tested with MySQL and SQLite
+- inspired by [Paris](http://j4mie.github.io/idiormandparis/) but with less magic for better autocompletion
+
+The following conventions are used:
+
+- Every table requires a class inheriting from `nochso\ORM\Model`.
+- Class names are snaked_cased to table names by default.
+    - Otherwise you can override `protected static $_tableName`
+- Public properties of model classes correspond to column names.
+
+## Installation
+[Get composer](https://getcomposer.org) and require `nochso/orm`.
+
+```
+composer require nochso/orm
 ```
 
-## Basic usage
-Much like Paris or most fluent/AR packages, except focus on speed and proper hinting of class properties.
+## Example
 
 ```php
 use nochso\ORM\Model;
