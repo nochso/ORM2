@@ -9,4 +9,3 @@ test.bat
 .hgignore
 vendor/
 .idea/
-composer.lock
