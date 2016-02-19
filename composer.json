@@ -25,7 +25,11 @@
   ],
   "autoload": {
     "psr-4": {
-      "nochso\\ORM\\": "src/",
+      "nochso\\ORM\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
       "Test\\": "tests/"
     }
   },
