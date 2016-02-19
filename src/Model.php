@@ -156,8 +156,7 @@ class Model
         $one = null;
         $statement = $this->_queryBuilder->getStatement();
         if ($row = $statement->fetch(PDO::FETCH_OBJ)) {
-            $one = $this->dispense()->hydrate($row);
-            $one->_isNew = false;
+            $one = $this->createFromData($row);
         }
         $statement->closeCursor();
         return $one;
@@ -177,8 +176,7 @@ class Model
         }
         $one = null;
         if ($row = $statement->fetch(PDO::FETCH_OBJ)) {
-            $one = $this->dispense()->hydrate($row);
-            $one->_isNew = false;
+            $one = $this->createFromData($row);
         }
         $statement->closeCursor();
         return $one;
@@ -199,8 +197,7 @@ class Model
         }
         $rows = array();
         while ($row = $statement->fetch(PDO::FETCH_OBJ)) {
-            $one = $this->dispense()->hydrate($row);
-            $one->_isNew = false;
+            $one = $this->createFromData($row);
             $rows[$one->getPrimaryKeyValue()] = $one;
         }
         $statement->closeCursor();
@@ -310,6 +307,19 @@ class Model
             $this->$key = null;
         }
         return $this;
+    }
+
+    /**
+     * Dispenses a hydrated model that is known to exist in a database (i.e. is not new)
+     *
+     * @param  array  $data
+     * @return static
+     */
+    private function createFromData($data)
+    {
+        $model = $this->dispense()->hydrate($data);
+        $model->_isNew = false;
+        return $model;
     }
 
     public function extra($key)
