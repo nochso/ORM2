@@ -267,7 +267,6 @@ class Model
      * Returns an associative array from this object excluding private variables and Relation objects
      *
      * @return array
-     * @todo Figure out generic and decent way to convert from e.g. DateTime() to SQL-friendly data.
      */
     public function toAssoc()
     {
@@ -296,7 +295,6 @@ class Model
      *
      * Default: false
      * @return static
-     * @todo Figure out generic and decent way to convert from SQL data to DateTime() or similar
      */
     public function hydrate($data, $removePrimaryKey = false)
     {
