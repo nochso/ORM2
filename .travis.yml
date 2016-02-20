@@ -6,7 +6,6 @@ php:
   - hhvm
   - 7.0
 install:
-  - composer self-update
   - composer update
   - composer require satooshi/php-coveralls
 before_script:
