@@ -9,16 +9,19 @@
     "relational",
     "mapper",
     "active record",
+    "fluent",
+    "query builder",
+    "chaining",
     "mysql",
     "sqlite",
     "storage"
   ],
-  "homepage": "http://localhost/orm/",
+  "homepage": "http://github.com/nochso/ORM2/",
   "license": "MIT",
   "authors": [
     {
       "name": "Marcel Voigt",
-      "email": "marcelpvoigt@gmail.com",
+      "email": "mv@noch.so",
       "homepage": "http://noch.so",
       "role": "Developer"
     }
