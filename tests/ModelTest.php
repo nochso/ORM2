@@ -111,7 +111,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $user = User::select($column);
 
         // Get the private QueryBuilder
-        $refQueryBuilder = new \ReflectionProperty('\nochso\ORM\Model', '_queryBuilder');
+        $refQueryBuilder = new \ReflectionProperty('\nochso\ORM\Model', 'queryBuilder');
         $refQueryBuilder->setAccessible(true);
         $queryBuilder = $refQueryBuilder->getValue($user);
 

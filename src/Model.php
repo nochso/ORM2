@@ -17,9 +17,9 @@ class Model
     /**
      * Properties used by Model instances
      */
-    private $_isNew = true;
-    private $_queryBuilder;
-    private $_extra = array();
+    private $isNew = true;
+    private $queryBuilder;
+    private $extra = array();
 
     /**
      *
@@ -30,9 +30,9 @@ class Model
     {
         $caller = get_called_class();
         $new = new $caller();
-        $new->_queryBuilder = new QueryBuilder($new->getTableName());
+        $new->queryBuilder = new QueryBuilder($new->getTableName());
         if ($columns !== null) {
-            $new->_queryBuilder->addSelectColumn($columns);
+            $new->queryBuilder->addSelectColumn($columns);
         }
         return $new;
     }
@@ -54,12 +54,12 @@ class Model
         }
 
         if ($id !== null) {
-            $this->_queryBuilder = new QueryBuilder($this->getTableName());
+            $this->queryBuilder = new QueryBuilder($this->getTableName());
             $this->eq(self::$_primaryKey, $id)->limit(1);
-            $statement = $this->_queryBuilder->getStatement();
+            $statement = $this->queryBuilder->getStatement();
             if ($row = $statement->fetch(PDO::FETCH_OBJ)) {
                 $this->hydrate($row);
-                $this->_isNew = false;
+                $this->isNew = false;
             }
             $statement->closeCursor();
         }
@@ -131,10 +131,10 @@ class Model
 
     private function addWhere($column, $op, $value)
     {
-        if ($this->_queryBuilder === null) {
-            $this->_queryBuilder = new QueryBuilder($this->getTableName());
+        if ($this->queryBuilder === null) {
+            $this->queryBuilder = new QueryBuilder($this->getTableName());
         }
-        $this->_queryBuilder->addWhere($column, $op, $value);
+        $this->queryBuilder->addWhere($column, $op, $value);
         return $this;
     }
 
@@ -152,9 +152,9 @@ class Model
         if ($id !== null) {
             $this->eq(self::$_primaryKey, $id);
         }
-        $this->_queryBuilder->setLimit(1);
+        $this->queryBuilder->setLimit(1);
         $one = null;
-        $statement = $this->_queryBuilder->getStatement();
+        $statement = $this->queryBuilder->getStatement();
         if ($row = $statement->fetch(PDO::FETCH_OBJ)) {
             $one = $this->createFromData($row);
         }
@@ -193,7 +193,7 @@ class Model
         if ($sql !== null && $params !== null) {
             $statement = DBA::execute($sql, $params);
         } else {
-            $statement = $this->_queryBuilder->getStatement();
+            $statement = $this->queryBuilder->getStatement();
         }
         $rows = array();
         while ($row = $statement->fetch(PDO::FETCH_OBJ)) {
@@ -208,55 +208,55 @@ class Model
 
     public function delete()
     {
-        if ($this->_queryBuilder === null) {
-            $this->_queryBuilder = new QueryBuilder($this->getTableName());
+        if ($this->queryBuilder === null) {
+            $this->queryBuilder = new QueryBuilder($this->getTableName());
         }
-        
-        $this->_queryBuilder->setQueryType(QueryBuilder::QUERY_TYPE_DELETE);
+
+        $this->queryBuilder->setQueryType(QueryBuilder::QUERY_TYPE_DELETE);
 
         // If this is called on an instance with primary key, delete only this instance
         if ($this->getPrimaryKeyValue() !== null) {
             $this->eq($this->getPrimaryKey(), $this->getPrimaryKeyValue());
         }
 
-        $statement = $this->_queryBuilder->getStatement();
+        $statement = $this->queryBuilder->getStatement();
         $statement->closeCursor();
     }
 
     public function save()
     {
-        if ($this->_queryBuilder === null) {
-            $this->_queryBuilder = new QueryBuilder($this->getTableName());
+        if ($this->queryBuilder === null) {
+            $this->queryBuilder = new QueryBuilder($this->getTableName());
         }
-        if ($this->_isNew) {
-            $this->_queryBuilder->setQueryType(QueryBuilder::QUERY_TYPE_INSERT);
+        if ($this->isNew) {
+            $this->queryBuilder->setQueryType(QueryBuilder::QUERY_TYPE_INSERT);
         } else {
             if ($this->getPrimaryKeyValue() === null) {
                 throw new \Exception('Can not update existing row of table ' . $this->getTableName() . ' without knowing the primary key.');
             }
             // Update exactly this instance, nothing else
-            $this->_queryBuilder->setQueryType(QueryBuilder::QUERY_TYPE_UPDATE);
+            $this->queryBuilder->setQueryType(QueryBuilder::QUERY_TYPE_UPDATE);
             $this->eq($this->getPrimaryKey(), $this->getPrimaryKeyValue());
         }
 
-        $this->_queryBuilder->setModelData($this->toAssoc());
-        $statement = $this->_queryBuilder->getStatement();
-        if ($this->_isNew) {
+        $this->queryBuilder->setModelData($this->toAssoc());
+        $statement = $this->queryBuilder->getStatement();
+        if ($this->isNew) {
             $primaryKey = $this->getPrimaryKey();
             // Keep the primary key if it was already set
             if ($this->$primaryKey === null) {
                 $this->$primaryKey = DBA::lastInsertID();
             }
-            $this->_isNew = false;
+            $this->isNew = false;
         }
         $statement->closeCursor();
     }
 
     public function update($data)
     {
-        $this->_queryBuilder->setQueryType(QueryBuilder::QUERY_TYPE_UPDATE);
-        $this->_queryBuilder->setModelData($data);
-        $statement = $this->_queryBuilder->getStatement();
+        $this->queryBuilder->setQueryType(QueryBuilder::QUERY_TYPE_UPDATE);
+        $this->queryBuilder->setModelData($data);
+        $statement = $this->queryBuilder->getStatement();
         $statement->closeCursor();
     }
 
@@ -299,7 +299,7 @@ class Model
             if (property_exists($this, $key)) {
                 $this->$key = $value;
             } else {
-                $this->_extra[$key] = $value;
+                $this->extra[$key] = $value;
             }
         }
         if ($removePrimaryKey) {
@@ -318,21 +318,21 @@ class Model
     private function createFromData($data)
     {
         $model = $this->dispense()->hydrate($data);
-        $model->_isNew = false;
+        $model->isNew = false;
         return $model;
     }
 
     public function extra($key)
     {
-        if (!isset($this->_extra[$key])) {
+        if (!isset($this->extra[$key])) {
             return null;
         }
-        return $this->_extra[$key];
+        return $this->extra[$key];
     }
 
     public function setExtra($key, $value)
     {
-        $this->_extra[$key] = $value;
+        $this->extra[$key] = $value;
     }
 
     /**
@@ -502,7 +502,7 @@ class Model
      */
     public function limit($limit, $offset = null)
     {
-        $this->_queryBuilder->setLimit($limit, $offset);
+        $this->queryBuilder->setLimit($limit, $offset);
         return $this;
     }
 
@@ -514,7 +514,7 @@ class Model
      */
     public function offset($offset)
     {
-        $this->_queryBuilder->setOffset($offset);
+        $this->queryBuilder->setOffset($offset);
         return $this;
     }
 
@@ -526,7 +526,7 @@ class Model
      */
     public function orderAsc($column)
     {
-        $this->_queryBuilder->addOrderAsc($column);
+        $this->queryBuilder->addOrderAsc($column);
         return $this;
     }
 
@@ -538,7 +538,7 @@ class Model
      */
     public function orderDesc($column)
     {
-        $this->_queryBuilder->addOrderDesc($column);
+        $this->queryBuilder->addOrderDesc($column);
         return $this;
     }
 
@@ -550,7 +550,7 @@ class Model
      */
     public function avg($column)
     {
-        return $this->_queryBuilder->getAggregateColumn('AVG', $column);
+        return $this->queryBuilder->getAggregateColumn('AVG', $column);
     }
 
     /**
@@ -561,7 +561,7 @@ class Model
      */
     public function sum($column)
     {
-        return $this->_queryBuilder->getAggregateColumn('SUM', $column);
+        return $this->queryBuilder->getAggregateColumn('SUM', $column);
     }
 
     /**
@@ -572,7 +572,7 @@ class Model
      */
     public function count($column = '*')
     {
-        return (int)$this->_queryBuilder->getAggregateColumn('COUNT', $column);
+        return (int)$this->queryBuilder->getAggregateColumn('COUNT', $column);
     }
 
     /**
@@ -583,7 +583,7 @@ class Model
      */
     public function min($column)
     {
-        return $this->_queryBuilder->getAggregateColumn('MIN', $column);
+        return $this->queryBuilder->getAggregateColumn('MIN', $column);
     }
 
     /**
@@ -594,6 +594,6 @@ class Model
      */
     public function max($column)
     {
-        return $this->_queryBuilder->getAggregateColumn('MAX', $column);
+        return $this->queryBuilder->getAggregateColumn('MAX', $column);
     }
 }
