@@ -39,9 +39,6 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
         DBA::execute('INSERT INTO user_role (id, description) VALUES (?, ?)', [99, 'Administrator']);
     }
 
-    /**
-     * @covers \nochso\ORM\ResultSet::fetchRelations
-     */
     public function testFetchRelations()
     {
         $set = User::select()->all();
@@ -63,9 +60,6 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
         $empty->fetchRelations();
     }
 
-    /**
-     * @covers \nochso\ORM\ResultSet::toArray
-     */
     public function testToArray()
     {
         $array = User::select()
@@ -77,9 +71,6 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(1, $array);
     }
 
-    /**
-     * @covers \nochso\ORM\ResultSet::getPrimaryKeyList
-     */
     public function testGetPrimaryKeyList()
     {
         $users = User::select()->all();
@@ -92,9 +83,6 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(0, $keyList);
     }
 
-    /**
-     * @covers \nochso\ORM\ResultSet::update
-     */
     public function testUpdate()
     {
         $users = User::select()->all();
@@ -112,9 +100,6 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(0, $users);
     }
 
-    /**
-     * @covers \nochso\ORM\ResultSet::save
-     */
     public function testSave()
     {
         $users = User::select()->all();
@@ -144,9 +129,6 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
         $users->save();
     }
 
-    /**
-     * @covers \nochso\ORM\ResultSet::offsetGet
-     */
     public function testOffsetGet()
     {
         $ids = [1, 2];
@@ -158,9 +140,6 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($users[55]);
     }
 
-    /**
-     * @covers \nochso\ORM\ResultSet::offsetSet
-     */
     public function testOffsetSet()
     {
         $users = User::select()->eq('id', 99)->all();
@@ -173,9 +152,6 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey(2, $users);
     }
 
-    /**
-     * @covers \nochso\ORM\ResultSet::delete
-     */
     public function testDelete()
     {
         // Create unique user
@@ -202,9 +178,6 @@ class ResultSetTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $users);
     }
 
-    /**
-     * @covers \nochso\ORM\ResultSet::count
-     */
     public function testCount()
     {
         $users = User::select()->all();

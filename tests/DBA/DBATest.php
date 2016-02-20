@@ -27,9 +27,6 @@ class DBATest extends PHPUnit_Framework_TestCase
         DBA::execute("INSERT INTO user (id, name, role_id) VALUES (1, 'user', 1)");
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\DBA::connect
-     */
     public function testConnect()
     {
         DBA::disconnect();
@@ -37,9 +34,6 @@ class DBATest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($this->getPDO());
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\DBA::beginTransaction
-     */
     public function testBeginTransaction()
     {
         $this->assertTrue(DBA::beginTransaction());
@@ -52,9 +46,6 @@ class DBATest extends PHPUnit_Framework_TestCase
         $this->assertEquals($row['id'], '1');
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\DBA::commit
-     */
     public function testCommit()
     {
         DBA::beginTransaction();
@@ -66,9 +57,6 @@ class DBATest extends PHPUnit_Framework_TestCase
         $this->assertEquals($row['id'], '1');
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\DBA::rollBack
-     */
     public function testRollBack()
     {
         DBA::beginTransaction();
@@ -81,9 +69,6 @@ class DBATest extends PHPUnit_Framework_TestCase
         $this->assertFalse($row);
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\DBA::lastInsertID
-     */
     public function testLastInsertID()
     {
         $this->insertUser();
@@ -98,7 +83,6 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \nochso\ORM\DBA\DBA::connect
      * @expectedException \PDOException
      */
     public function testConnectException()
@@ -106,9 +90,6 @@ class DBATest extends PHPUnit_Framework_TestCase
         DBA::connect('fail', '', '');
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\DBA::disconnect
-     */
     public function testDisconnect()
     {
         $this->assertNotNull($this->getPDO());
@@ -116,9 +97,6 @@ class DBATest extends PHPUnit_Framework_TestCase
         $this->assertNull($this->getPDO());
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\DBA::getLog
-     */
     public function testGetLog()
     {
         // Log has entries
@@ -137,9 +115,6 @@ class DBATest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, count($log));
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\DBA::addLog
-     */
     public function testAddLog()
     {
         $data = ['foo'];
@@ -155,9 +130,6 @@ class DBATest extends PHPUnit_Framework_TestCase
         $this->assertEquals(count($lastEntry->data), 1);
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\DBA::emptyLog
-     */
     public function testEmptyLog()
     {
         $this->assertGreaterThan(0, count(DBA::getLog()));
@@ -165,9 +137,6 @@ class DBATest extends PHPUnit_Framework_TestCase
         $this->assertEquals(count(DBA::getLog()), 0);
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\DBA::prepare
-     */
     public function testPrepare()
     {
         $sql = 'SELECT * FROM user';
@@ -176,7 +145,6 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \nochso\ORM\DBA\DBA::prepare
      * @expectedException \PDOException
      */
     public function testPrepareException()
@@ -184,9 +152,6 @@ class DBATest extends PHPUnit_Framework_TestCase
         $statement = DBA::prepare('SELECT * FROM missingtable');
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\DBA::execute
-     */
     public function testExecute()
     {
         // INSERT and check it has been logged
@@ -204,7 +169,6 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \nochso\ORM\DBA\DBA::execute
      * @expectedException \PDOException
      */
     public function testExecuteException()
@@ -212,17 +176,11 @@ class DBATest extends PHPUnit_Framework_TestCase
         DBA::execute("THIS SHOULD FAIL");
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\DBA::escapeLike
-     */
     public function testEscapeLike()
     {
         $this->assertEquals("=_=%", DBA::escapeLike("_%"));
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\DBA::escape
-     */
     public function testEscape()
     {
         $this->assertEquals("''", DBA::escape("'"));

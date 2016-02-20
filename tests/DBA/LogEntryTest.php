@@ -8,9 +8,6 @@ use nochso\ORM\Test\Model\User;
 
 class LogEntryTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @covers \nochso\ORM\DBA\LogEntry::__construct
-     */
     public function testConstructor()
     {
         $data = [':key' => 'value'];
@@ -21,9 +18,6 @@ class LogEntryTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, $entry->start);
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\LogEntry::finish
-     */
     public function testFinish()
     {
         $data = [':key' => 'value'];
@@ -38,11 +32,6 @@ class LogEntryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($lastEntry, $entry);
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\LogEntry::__toString
-     * @covers \nochso\ORM\DBA\LogEntry::getPrettyStatement
-     * @covers \nochso\ORM\DBA\LogEntry::strReplaceOnce
-     */
     public function testToString()
     {
         $data = [':key' => 'value'];
@@ -52,11 +41,6 @@ class LogEntryTest extends \PHPUnit_Framework_TestCase
         $this->assertContains("SELECT * FROM user WHERE name = 'value'", (string)$entry);
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\LogEntry::__toString
-     * @covers \nochso\ORM\DBA\LogEntry::getPrettyStatement
-     * @covers \nochso\ORM\DBA\LogEntry::strReplaceOnce
-     */
     public function testToStringIndex()
     {
         $data = ['value', 'value2'];

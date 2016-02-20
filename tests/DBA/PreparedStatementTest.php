@@ -15,9 +15,6 @@ class PreparedStatementTest extends \PHPUnit_Framework_TestCase
         return $pdo;
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\PreparedStatement::__construct
-     */
     public function testConstructor()
     {
         $pdo = $this->getPDO();
@@ -26,9 +23,6 @@ class PreparedStatementTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(get_class($statement), PreparedStatement::class);
     }
 
-    /**
-     * @covers \nochso\ORM\DBA\PreparedStatement::execute
-     */
     public function testExecute()
     {
         $pdo = $this->getPDO();
@@ -43,7 +37,6 @@ class PreparedStatementTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \nochso\ORM\DBA\PreparedStatement::execute
      * @expectedException \PDOException
      * @expectedExceptionMessage General error: 17 database schema has changed
      */

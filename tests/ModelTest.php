@@ -43,9 +43,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
         DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', [2, 'Admin']);
     }
 
-    /**
-     * @covers \nochso\ORM\Model::__construct
-     */
     public function testConstructor()
     {
         // Dummy::$_tableName is null before first instantiation
@@ -79,9 +76,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($user->id);
     }
 
-    /**
-     * @covers \nochso\ORM\Model::select
-     */
     public function testSelect()
     {
         // Should dispense a Model instance
@@ -89,9 +83,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
         $this->selectHelper($user);
     }
 
-    /**
-     * @covers \nochso\ORM\Model::dispense
-     */
     public function testDispense()
     {
         $user = new User();
@@ -122,9 +113,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($selectColumns[0], $column);
     }
 
-    /**
-     * @covers \nochso\ORM\Model::save
-     */
     public function testSave()
     {
         // Insert new user, should fill the primary key after insert
@@ -145,9 +133,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($user2->role_id, $user->role_id);
     }
 
-    /**
-     * @covers \nochso\ORM\Model::save
-     */
     public function testSaveChosenPrimaryKey()
     {
         $user = new Comment();
@@ -157,7 +142,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \nochso\ORM\Model::save
      * @expectedException \Exception
      * @expectedExceptionMessage Can not update existing row of table user without knowing the primary key.
      */
@@ -168,9 +152,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
         $user->save();
     }
 
-    /**
-     * @covers \nochso\ORM\Model::toAssoc
-     */
     public function testToAssoc()
     {
         $user = User::select()->one();
@@ -180,9 +161,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($assoc, $expectedAssoc);
     }
 
-    /**
-     * @covers \nochso\ORM\Model::getPrimaryKeyValue
-     */
     public function testGetPrimaryKeyValue()
     {
         $user = new User(1);
@@ -191,9 +169,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($newUser->getPrimaryKeyValue());
     }
 
-    /**
-     * @covers \nochso\ORM\Model::hydrate
-     */
     public function testHydrate()
     {
         $user = new User();
@@ -203,9 +178,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('value2', $user->name);
     }
 
-    /**
-     * @covers \nochso\ORM\Model::one
-     */
     public function testOne()
     {
         $user = User::select()->eq('id', 'x')->one();
@@ -214,9 +186,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($user->id, 1);
     }
 
-    /**
-     * @covers \nochso\ORM\Model::all
-     */
     public function testAll()
     {
         $users = User::select()->eq('id', 'x')->all();
@@ -227,9 +196,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $users);
     }
 
-    /**
-     * @covers \nochso\ORM\Model::delete
-     */
     public function testDelete()
     {
         // Delete user by filtering
@@ -249,9 +215,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
         $user->delete();
     }
 
-    /**
-     * @covers \nochso\ORM\Model::fetchRelations
-     */
     public function testFetchRelations()
     {
         $user = new User(1);
@@ -263,9 +226,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($user->role->description, 'User');
     }
 
-    /**
-     * @covers \nochso\ORM\Model::update
-     */
     public function testUpdate()
     {
         $users = User::select()->all();
