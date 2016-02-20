@@ -64,6 +64,7 @@ class Relation implements \Iterator, \ArrayAccess, \Countable
      * Returns the name of the column that will be filtered on
      *
      * @return string
+     * @throws \Exception
      */
     public function getForeignKey()
     {
@@ -75,17 +76,18 @@ class Relation implements \Iterator, \ArrayAccess, \Countable
             case self::HAS_MANY:
             case self::HAS_ONE:
                 return $this->owner->getTableName() . '_' . $this->owner->getPrimaryKey();
-                break;
             case self::BELONGS_TO:
                 return $this->foreign->getPrimaryKey();
-                break;
+            default:
+                throw new \Exception(sprintf("Relation type '%s' is not supported.", $this->type));
         }
     }
 
     /**
      * Returns the value identifiying the foreign rows, i.e. the value belonging to getForeignkey()
      *
-     * @return type
+     * @return mixed
+     * @throws \Exception
      */
     public function getForeignValue()
     {
@@ -98,12 +100,11 @@ class Relation implements \Iterator, \ArrayAccess, \Countable
             case self::HAS_MANY:
             case self::HAS_ONE:
                 return $this->owner->getPrimaryKeyValue();
-                break;
-
             case self::BELONGS_TO:
                 $fk = $this->foreign->getTableName() . '_' . $this->foreign->getPrimaryKey();
                 return $this->owner->$fk;
-                break;
+            default:
+                throw new \Exception(sprintf("Relation type '%s' is not supported.", $this->type));
         }
     }
 
