@@ -7,11 +7,8 @@ use PDOStatement;
 
 class PreparedStatement extends PDOStatement
 {
-    private $pdo;
-
     protected function __construct(PDO $pdo)
     {
-        $this->pdo = $pdo;
     }
 
     public function execute($data = array())
