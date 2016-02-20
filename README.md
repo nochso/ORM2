@@ -1,7 +1,6 @@
-# noch.so / ORM2
+# nochso/orm
 [![License](https://poser.pugx.org/nochso/orm/license)](https://packagist.org/packages/nochso/orm)
 [![GitHub tag](https://img.shields.io/github/tag/nochso/ORM2.svg)](https://github.com/nochso/ORM2/releases)
-
 [![Build Status](https://travis-ci.org/nochso/ORM2.svg?branch=master)](https://travis-ci.org/nochso/ORM2)
 [![SensioLabs Insight](https://img.shields.io/sensiolabs/i/c4694967-5a09-400f-b493-728935812c7a.svg)](https://insight.sensiolabs.com/projects/c4694967-5a09-400f-b493-728935812c7a)
 [![Coverage Status](https://coveralls.io/repos/github/nochso/ORM2/badge.svg?branch=master)](https://coveralls.io/github/nochso/ORM2?branch=master)
@@ -19,6 +18,18 @@ The following conventions are used:
 - Class names are snaked_cased to table names by default.
     - Otherwise you can override `protected static $_tableName`
 - Public properties of model classes correspond to column names.
+
+Select all rows from table `blog_post` with title matching "Hello %" ordered by `creation_date`. Then update all titles at once.
+```php
+$posts = BlogPost::select()
+    ->like('title', 'Hello %')
+    ->orderAsc('creation_date')
+    ->all();
+foreach ($posts as $primaryKey => $post) {
+    $post->title .= ' and goodbye';
+}
+$posts->save();
+```
 
 ## Installation
 [Get composer](https://getcomposer.org) and require `nochso/orm`.
