@@ -10,14 +10,14 @@ class DBA
      * @var PDO $pdo
      */
     private static $pdo;
-    private static $log = array();
+    private static $log = [];
 
-    public static function connect($dsn, $username, $password, $options = array())
+    public static function connect($dsn, $username, $password, $options = [])
     {
-        $logEntry = new LogEntry(array(), "Connecting to database using DSN: " . $dsn);
+        $logEntry = new LogEntry([], "Connecting to database using DSN: " . $dsn);
         self::$pdo = new PDO($dsn, $username, $password, $options);
         self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        self::$pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('nochso\ORM\DBA\PreparedStatement', array(self::$pdo)));
+        self::$pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, ['nochso\ORM\DBA\PreparedStatement', [self::$pdo]]);
         $logEntry->finish();
     }
 
@@ -37,7 +37,7 @@ class DBA
      *
      * @return \PDOStatement
      */
-    public static function execute($sql, $data = array())
+    public static function execute($sql, $data = [])
     {
         $statement = self::$pdo->prepare($sql);
         $statement->execute($data);
@@ -55,16 +55,16 @@ class DBA
     public static function escapeLike($string, $escapeChar = '=')
     {
         return str_replace(
-            array(
+            [
                 $escapeChar,
                 '_',
                 '%',
-            ),
-            array(
+            ],
+            [
                 $escapeChar . $escapeChar,
                 $escapeChar . '_',
                 $escapeChar . '%',
-            ),
+            ],
             $string
         );
     }
@@ -127,6 +127,6 @@ class DBA
      */
     public static function emptyLog()
     {
-        self::$log = array();
+        self::$log = [];
     }
 }

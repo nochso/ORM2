@@ -10,7 +10,7 @@ class LogEntryTest extends PHPUnit_Framework_TestCase
      */
     public function testConstructor()
     {
-        $data = array(':key' => 'value');
+        $data = [':key' => 'value'];
         $statement = 'SELECT * FROM user';
         $entry = new LogEntry($data, $statement);
         $this->assertEquals($entry->statement, $statement);
@@ -23,7 +23,7 @@ class LogEntryTest extends PHPUnit_Framework_TestCase
      */
     public function testFinish()
     {
-        $data = array(':key' => 'value');
+        $data = [':key' => 'value'];
         $statement = 'SELECT * FROM user';
         $entry = new LogEntry($data, $statement);
         $entry->finish();
@@ -42,7 +42,7 @@ class LogEntryTest extends PHPUnit_Framework_TestCase
      */
     public function testToString()
     {
-        $data = array(':key' => 'value');
+        $data = [':key' => 'value'];
         $statement = 'SELECT * FROM user WHERE name = :key';
         $entry = new LogEntry($data, $statement);
         $entry->finish();
@@ -56,7 +56,7 @@ class LogEntryTest extends PHPUnit_Framework_TestCase
      */
     public function testToStringIndex()
     {
-        $data = array('value', 'value2');
+        $data = ['value', 'value2'];
         $statement = 'SELECT * FROM user WHERE name = ?';
         $entry = new LogEntry($data, $statement);
         $entry->finish();

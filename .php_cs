@@ -24,5 +24,6 @@ return Symfony\CS\Config\Config::create()
         'ordered_use',
         'single_blank_line_before_namespace',
         'remove_leading_slash_use',
+        'short_array_syntax',
     ))
     ->finder($finder);

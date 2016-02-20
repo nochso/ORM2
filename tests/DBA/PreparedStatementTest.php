@@ -6,7 +6,7 @@ class PreparedStatementTest extends PHPUnit_Framework_TestCase
     {
         $pdo = new PDO('sqlite::memory:', '', '');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('\nochso\ORM\DBA\PreparedStatement', array($pdo)));
+        $pdo->setAttribute(PDO::ATTR_STATEMENT_CLASS, ['\nochso\ORM\DBA\PreparedStatement', [$pdo]]);
         return $pdo;
     }
 

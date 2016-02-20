@@ -60,7 +60,7 @@ class LogEntry
      */
     public function getPrettyStatement()
     {
-        $assoc = array();
+        $assoc = [];
         $statement = $this->statement;
         foreach ($this->data as $key => $value) {
             if (is_numeric($key)) {

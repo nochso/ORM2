@@ -37,11 +37,11 @@ class ModelTest extends PHPUnit_Framework_TestCase
         DBA::execute('DELETE FROM user_role');
         DBA::execute('DELETE FROM comment');
         DBA::execute("DELETE FROM sqlite_sequence WHERE name IN ('user', 'comment')");
-        DBA::execute('INSERT INTO user (name, role_id) VALUES(?, ?)', array('Abed', 1));
-        DBA::execute('INSERT INTO user (name, role_id) VALUES(?, ?)', array('Dean', 2));
-        DBA::execute('INSERT INTO comment (user_id, comment) VALUES(?, ?)', array(1, 'Hi'));
-        DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', array(1, 'User'));
-        DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', array(2, 'Admin'));
+        DBA::execute('INSERT INTO user (name, role_id) VALUES(?, ?)', ['Abed', 1]);
+        DBA::execute('INSERT INTO user (name, role_id) VALUES(?, ?)', ['Dean', 2]);
+        DBA::execute('INSERT INTO comment (user_id, comment) VALUES(?, ?)', [1, 'Hi']);
+        DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', [1, 'User']);
+        DBA::execute('INSERT INTO user_role (id, description) VALUES(?, ?)', [2, 'Admin']);
     }
 
     /**
@@ -177,7 +177,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $user = User::select()->one();
 
         $assoc = $user->toAssoc();
-        $expectedAssoc = array('id' => 1, 'name' => 'Abed', 'role_id' => 1);
+        $expectedAssoc = ['id' => 1, 'name' => 'Abed', 'role_id' => 1];
         $this->assertEquals($assoc, $expectedAssoc);
     }
 
@@ -198,7 +198,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     public function testHydrate()
     {
         $user = new User();
-        $data = array('id' => 'value', 'name' => 'value2');
+        $data = ['id' => 'value', 'name' => 'value2'];
         $user->hydrate($data);
         $this->assertEquals('value', $user->id);
         $this->assertEquals('value2', $user->name);
@@ -260,7 +260,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($user->role->id, null);
         $user->fetchRelations();
         $this->assertEquals($user->role->id, 1);
-        $this->assertEquals(array('1'), $user->comments->getPrimaryKeyList());
+        $this->assertEquals(['1'], $user->comments->getPrimaryKeyList());
         $this->assertEquals($user->role->description, 'User');
     }
 
@@ -274,7 +274,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertNotEquals($user->name, 'updated name');
         }
 
-        User::select()->update(array('name' => 'updated name'));
+        User::select()->update(['name' => 'updated name']);
         $users = User::select()->all();
         foreach ($users as $user) {
             $this->assertEquals($user->name, 'updated name');

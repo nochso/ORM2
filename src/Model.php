@@ -12,14 +12,14 @@ class Model
      */
     protected static $_tableName;
     protected static $_primaryKey = 'id';
-    protected static $_relations = array();
+    protected static $_relations = [];
 
     /**
      * Properties used by Model instances
      */
     private $isNew = true;
     private $queryBuilder;
-    private $extra = array();
+    private $extra = [];
 
     /**
      *
@@ -78,7 +78,7 @@ class Model
     private static function classNameToTableName($className)
     {
         return strtolower(preg_replace(
-                        array('/\\\\/', '/(?<=[a-z])([A-Z])/', '/__/'), array('_', '_$1', '_'), ltrim($className, '\\')
+                        ['/\\\\/', '/(?<=[a-z])([A-Z])/', '/__/'], ['_', '_$1', '_'], ltrim($className, '\\')
         ));
     }
 
@@ -195,7 +195,7 @@ class Model
         } else {
             $statement = $this->queryBuilder->getStatement();
         }
-        $rows = array();
+        $rows = [];
         while ($row = $statement->fetch(PDO::FETCH_OBJ)) {
             $one = $this->createFromData($row);
             $rows[$one->getPrimaryKeyValue()] = $one;
@@ -267,7 +267,7 @@ class Model
      */
     public function toAssoc()
     {
-        $params = array();
+        $params = [];
         foreach (Extract::getObjectVars($this) as $key => $value) {
             if (!$value instanceof Relation) {
                 $params[$key] = $value;

@@ -7,15 +7,15 @@ use nochso\ORM\DBA\DBA as DBA;
 class QueryBuilder
 {
     private $tableName;
-    private $where = array();
+    private $where = [];
     private $limit;
     private $offset;
-    private $order = array();
-    private $parameters = array();
+    private $order = [];
+    private $parameters = [];
     private $parameterCount = 0;
     private $queryType;
     private $modelData;
-    private $selectColumns = array();
+    private $selectColumns = [];
 
     const QUERY_TYPE_SELECT = 0;
     const QUERY_TYPE_DELETE = 1;
@@ -33,7 +33,7 @@ class QueryBuilder
      */
     public function addWhere($column, $op, $value)
     {
-        $this->where[] = array('column' => $column, 'op' => $op, 'value' => $value);
+        $this->where[] = ['column' => $column, 'op' => $op, 'value' => $value];
     }
 
     public function setLimit($limit, $offset = null)
@@ -46,7 +46,7 @@ class QueryBuilder
 
     public function getAggregateColumn($function, $column)
     {
-        $this->selectColumns = array("$function($column)");
+        $this->selectColumns = ["$function($column)"];
         $statement = $this->getStatement();
         if ($row = $statement->fetch(\PDO::FETCH_NUM)) {
             return $row[0];
@@ -102,15 +102,15 @@ class QueryBuilder
     private function reset()
     {
         $this->queryType = self::QUERY_TYPE_SELECT;
-        $this->where = array();
+        $this->where = [];
         $this->limit = null;
         $this->offset = null;
-        $this->order = array();
-        $this->parameters = array();
+        $this->order = [];
+        $this->parameters = [];
         $this->parameterCount = 0;
         $this->queryType = null;
         $this->modelData = null;
-        $this->selectColumns = array();
+        $this->selectColumns = [];
     }
 
     /**
@@ -149,7 +149,7 @@ class QueryBuilder
 
             case self::QUERY_TYPE_INSERT:
                 $columnNames = '`' . implode('`, `', array_keys($this->modelData)) . '`';
-                $parameters = array();
+                $parameters = [];
                 foreach ($this->modelData as $key => $value) {
                     $parameters[] = $this->addParameter($value);
                 }
@@ -162,7 +162,7 @@ class QueryBuilder
 
     private function getUpdateSetsSQL()
     {
-        $sets = array();
+        $sets = [];
         foreach ($this->modelData as $key => $value) {
             $sets[] = $key . ' = ' . $this->addParameter($value);
         }
@@ -172,7 +172,7 @@ class QueryBuilder
     private function getMultiUpdateSetsSQL()
     {
         // For each property, map the primary key of the row to the new value of said property
-        $map = array();
+        $map = [];
         foreach ($this->modelData as $primaryKey => $row) {
             $assoc = $row->toAssoc();
             foreach ($assoc as $property => $value) {
@@ -206,7 +206,7 @@ class QueryBuilder
     private function getWhereSQL()
     {
         $where = '';
-        $parts = array();
+        $parts = [];
         if (count($this->where) > 0) {
             foreach ($this->where as $where) {
                 $parts[] = $this->buildWherePart($where['column'], $where['op'], $where['value']);
@@ -221,7 +221,7 @@ class QueryBuilder
         switch ($op) {
             case 'IN':
             case 'NOT IN':
-                $identifiers = array();
+                $identifiers = [];
                 foreach ($value as $v) {
                     $identifiers[] = $this->addParameter($v);
                 }

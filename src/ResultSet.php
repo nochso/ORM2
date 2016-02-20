@@ -4,13 +4,13 @@ namespace nochso\ORM;
 
 class ResultSet implements \Iterator, \ArrayAccess, \Countable
 {
-    protected $rows = array();
+    protected $rows = [];
     private $className;
 
     /**
      * Creating and filling a result set
      */
-    public function __construct($className, $rows = array())
+    public function __construct($className, $rows = [])
     {
         $this->className = $className;
         $this->rows = $rows;
@@ -73,7 +73,7 @@ class ResultSet implements \Iterator, \ArrayAccess, \Countable
      */
     public function getPrimaryKeyList()
     {
-        $ids = array();
+        $ids = [];
         if (count($this) > 0) {
             foreach ($this as $row) {
                 $ids[] = $row->getPrimaryKeyValue();
@@ -104,14 +104,14 @@ class ResultSet implements \Iterator, \ArrayAccess, \Countable
 
         // Fill $filterIDs with the name of the foreign key to be filtered on
         // Fill $filters with model instances to build filters with
-        $filterIDs = array();
-        $filters = array();
+        $filterIDs = [];
+        $filters = [];
         foreach ($relations as $property => $relation) {
             $filterIDs[$property]['foreignKey'] = $helperInstance->$property->getForeignKey();
             $filters[$property] = new $relation[1]();
         }
 
-        $groups = array();
+        $groups = [];
         foreach ($this->rows as $key => $row) {
             foreach ($relations as $property => $relation) {
                 // Fill $filterIDs with the values of the foreign keys to be filtered on

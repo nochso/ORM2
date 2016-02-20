@@ -11,7 +11,7 @@ class PreparedStatement extends PDOStatement
     {
     }
 
-    public function execute($data = array())
+    public function execute($data = [])
     {
         $logEntry = new LogEntry($data, $this->queryString);
         parent::execute($data);

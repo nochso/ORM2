@@ -30,12 +30,12 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
         DBA::execute('DELETE FROM user');
         DBA::execute("DELETE FROM sqlite_sequence WHERE name = 'user'");
         DBA::execute('DELETE FROM user_role');
-        DBA::execute('INSERT INTO user (id, name, role_id) VALUES(?, ?, ?)', array(1, 'Abed', 1));
-        DBA::execute('INSERT INTO user (id, name, role_id) VALUES(?, ?, ?)', array(2, 'Dean', 99));
-        DBA::execute('INSERT INTO comment (user_id, comment) VALUES (?, ?)', array(1, 'text'));
-        DBA::execute('INSERT INTO comment (user_id, comment) VALUES (?, ?)', array(1, 'text2'));
-        DBA::execute('INSERT INTO user_role (id, description) VALUES (?, ?)', array(1, 'User'));
-        DBA::execute('INSERT INTO user_role (id, description) VALUES (?, ?)', array(99, 'Administrator'));
+        DBA::execute('INSERT INTO user (id, name, role_id) VALUES(?, ?, ?)', [1, 'Abed', 1]);
+        DBA::execute('INSERT INTO user (id, name, role_id) VALUES(?, ?, ?)', [2, 'Dean', 99]);
+        DBA::execute('INSERT INTO comment (user_id, comment) VALUES (?, ?)', [1, 'text']);
+        DBA::execute('INSERT INTO comment (user_id, comment) VALUES (?, ?)', [1, 'text2']);
+        DBA::execute('INSERT INTO user_role (id, description) VALUES (?, ?)', [1, 'User']);
+        DBA::execute('INSERT INTO user_role (id, description) VALUES (?, ?)', [99, 'Administrator']);
     }
 
     /**
@@ -83,7 +83,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
     {
         $users = User::select()->all();
         $keyList = $users->getPrimaryKeyList();
-        $this->assertEquals($keyList, array(1, 2));
+        $this->assertEquals($keyList, [1, 2]);
 
         $users = User::select()->eq('id', 'x')->all();
         $keyList = $users->getPrimaryKeyList();
@@ -97,7 +97,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
     public function testUpdate()
     {
         $users = User::select()->all();
-        $users->update(array('role_id' => 3));
+        $users->update(['role_id' => 3]);
 
         $users = User::select()->all();
         $this->assertCount(2, $users);
@@ -106,7 +106,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
         }
 
         $users = User::select()->eq('id', 99)->all();
-        $users->update(array('role_id' => 4));
+        $users->update(['role_id' => 4]);
         $users = User::select()->eq('role_id', 4)->all();
         $this->assertCount(0, $users);
     }
@@ -124,7 +124,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
         }
 
         // Before saving, insert a new user that should not be affected by save()
-        DBA::execute('INSERT INTO user (id, name, role_id) VALUES(?, ?, ?)', array(3, 'odd man out', 1));
+        DBA::execute('INSERT INTO user (id, name, role_id) VALUES(?, ?, ?)', [3, 'odd man out', 1]);
         $users->save();
 
         // Make sure our changes were made, excluding the odd man out
@@ -148,7 +148,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
      */
     public function testOffsetGet()
     {
-        $ids = array(1, 2);
+        $ids = [1, 2];
         $users = User::select()->all();
         foreach ($ids as $id) {
             $this->assertArrayHasKey($id, $users);
