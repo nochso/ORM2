@@ -1,6 +1,6 @@
 # noch.so / ORM2
-[![Packagist](https://img.shields.io/packagist/l/nochso/orm.svg)]()
-[![GitHub release](https://img.shields.io/github/release/nochso/ORM2.svg)]()
+[![License](https://poser.pugx.org/nochso/orm/license)](https://packagist.org/packages/nochso/orm)
+[![GitHub tag](https://img.shields.io/github/tag/nochso/ORM2.svg)](https://github.com/nochso/ORM2/releases)
 
 [![Travis](https://img.shields.io/travis/nochso/ORM2.svg)]()
 [![SensioLabs Insight](https://img.shields.io/sensiolabs/i/c4694967-5a09-400f-b493-728935812c7a.svg)]()
