@@ -268,8 +268,8 @@ class Model
     public function toAssoc()
     {
         $params = array();
-        foreach (get_object_vars($this) as $key => $value) {
-            if ($key[0] != '_' && !($value instanceof Relation)) {
+        foreach (Extract::getObjectVars($this) as $key => $value) {
+            if (!$value instanceof Relation) {
                 $params[$key] = $value;
             }
         }
