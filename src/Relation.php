@@ -54,7 +54,6 @@ class Relation implements \Iterator, \ArrayAccess, \Countable
                 break;
             case self::HAS_ONE:
             case self::BELONGS_TO:
-            case self::IS_ONE:
                 $this->data = $filter->one();
                 break;
         }
