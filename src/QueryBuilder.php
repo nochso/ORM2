@@ -48,10 +48,12 @@ class QueryBuilder
     {
         $this->selectColumns = ["$function($column)"];
         $statement = $this->getStatement();
+        $value = null;
         if ($row = $statement->fetch(\PDO::FETCH_NUM)) {
-            return $row[0];
+            $value = $row[0];
         }
         $statement->closeCursor();
+        return $value;
     }
 
     public function addSelectColumn($column)
