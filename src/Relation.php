@@ -180,7 +180,7 @@ class Relation implements \Iterator, \ArrayAccess, \Countable
      */
     public function offsetExists($offset)
     {
-        if ($this->data instanceof \nochso\ORM\Model) {
+        if ($this->data instanceof Model) {
             return isset($this->data->$offset);
         } else {
             return isset($this->data[$offset]);
@@ -189,7 +189,7 @@ class Relation implements \Iterator, \ArrayAccess, \Countable
 
     public function offsetGet($offset)
     {
-        if ($this->data instanceof \nochso\ORM\Model) {
+        if ($this->data instanceof Model) {
             if (isset($this->data->$offset)) {
                 return $this->data->$offset;
             }
