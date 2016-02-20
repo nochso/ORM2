@@ -1,9 +1,11 @@
 # noch.so / ORM2
 [![Packagist](https://img.shields.io/packagist/l/nochso/orm.svg)]()
-[![GitHub release](https://img.shields.io/github/release/nochso/orm2.svg)]()
-[![Build Status](https://travis-ci.org/nochso/ORM2.svg?branch=master)](https://travis-ci.org/nochso/ORM2)
+[![GitHub release](https://img.shields.io/github/release/nochso/ORM2.svg)]()
+
+[![Travis](https://img.shields.io/travis/nochso/ORM2.svg)]()
+[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/c4694967-5a09-400f-b493-728935812c7a.svg)]()
 [![Coveralls](https://img.shields.io/coveralls/nochso/ORM2.svg)]()
-[![Dependency Status](https://www.versioneye.com/user/projects/558dc123316338001e00001a/badge.svg?style=flat)](https://www.versioneye.com/user/projects/558dc123316338001e00001a)
+[![Dependency Status](https://www.versioneye.com/user/projects/558dc123316338001e00001a/badge.svg)](https://www.versioneye.com/user/projects/558dc123316338001e00001a)
 
 A stable ActiveRecord implementation:
  
