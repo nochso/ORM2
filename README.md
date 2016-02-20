@@ -2,9 +2,9 @@
 [![License](https://poser.pugx.org/nochso/orm/license)](https://packagist.org/packages/nochso/orm)
 [![GitHub tag](https://img.shields.io/github/tag/nochso/ORM2.svg)](https://github.com/nochso/ORM2/releases)
 
-[![Travis](https://img.shields.io/travis/nochso/ORM2.svg)]()
-[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/c4694967-5a09-400f-b493-728935812c7a.svg)]()
-[![Coveralls](https://img.shields.io/coveralls/nochso/ORM2.svg)]()
+[![Build Status](https://travis-ci.org/nochso/ORM2.svg?branch=master)](https://travis-ci.org/nochso/ORM2)
+[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/c4694967-5a09-400f-b493-728935812c7a.svg)](https://insight.sensiolabs.com/projects/c4694967-5a09-400f-b493-728935812c7a)
+[![Coverage Status](https://coveralls.io/repos/github/nochso/ORM2/badge.svg?branch=master)](https://coveralls.io/github/nochso/ORM2?branch=master)
 [![Dependency Status](https://www.versioneye.com/user/projects/558dc123316338001e00001a/badge.svg)](https://www.versioneye.com/user/projects/558dc123316338001e00001a)
 
 A stable ActiveRecord implementation:
