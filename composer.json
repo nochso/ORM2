@@ -33,7 +33,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Test\\": "tests/"
+      "nochso\\ORM\\Test\\": "tests/"
     }
   },
   "require-dev": {

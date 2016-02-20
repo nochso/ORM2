@@ -1,6 +1,10 @@
 <?php
 
+namespace nochso\ORM\Test\DBA;
+
 use nochso\ORM\DBA\DBA;
+use nochso\ORM\DBA\LogEntry;
+use PHPUnit_Framework_TestCase;
 
 class DBATest extends PHPUnit_Framework_TestCase
 {
@@ -24,7 +28,7 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::connect
+     * @covers \nochso\ORM\DBA\DBA::connect
      */
     public function testConnect()
     {
@@ -34,7 +38,7 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::beginTransaction
+     * @covers \nochso\ORM\DBA\DBA::beginTransaction
      */
     public function testBeginTransaction()
     {
@@ -49,7 +53,7 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::commit
+     * @covers \nochso\ORM\DBA\DBA::commit
      */
     public function testCommit()
     {
@@ -63,7 +67,7 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::rollBack
+     * @covers \nochso\ORM\DBA\DBA::rollBack
      */
     public function testRollBack()
     {
@@ -78,7 +82,7 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::lastInsertID
+     * @covers \nochso\ORM\DBA\DBA::lastInsertID
      */
     public function testLastInsertID()
     {
@@ -88,14 +92,14 @@ class DBATest extends PHPUnit_Framework_TestCase
 
     public function getPDO()
     {
-        $reflection = new \ReflectionProperty('\nochso\ORM\DBA\DBA', 'pdo');
+        $reflection = new \ReflectionProperty(DBA::class, 'pdo');
         $reflection->setAccessible(true);
         return $reflection->getValue();
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::connect
-     * @expectedException PDOException
+     * @covers \nochso\ORM\DBA\DBA::connect
+     * @expectedException \PDOException
      */
     public function testConnectException()
     {
@@ -103,7 +107,7 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::disconnect
+     * @covers \nochso\ORM\DBA\DBA::disconnect
      */
     public function testDisconnect()
     {
@@ -113,7 +117,7 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::getLog
+     * @covers \nochso\ORM\DBA\DBA::getLog
      */
     public function testGetLog()
     {
@@ -134,13 +138,13 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::addLog
+     * @covers \nochso\ORM\DBA\DBA::addLog
      */
     public function testAddLog()
     {
         $data = ['foo'];
         $statement = 'SELECT * FROM test';
-        $entry = new nochso\ORM\DBA\LogEntry($data, $statement);
+        $entry = new LogEntry($data, $statement);
         $entry->finish();
 
         $log = DBA::getLog();
@@ -152,7 +156,7 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::emptyLog
+     * @covers \nochso\ORM\DBA\DBA::emptyLog
      */
     public function testEmptyLog()
     {
@@ -162,7 +166,7 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::prepare
+     * @covers \nochso\ORM\DBA\DBA::prepare
      */
     public function testPrepare()
     {
@@ -172,8 +176,8 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::prepare
-     * @expectedException PDOException
+     * @covers \nochso\ORM\DBA\DBA::prepare
+     * @expectedException \PDOException
      */
     public function testPrepareException()
     {
@@ -181,7 +185,7 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::execute
+     * @covers \nochso\ORM\DBA\DBA::execute
      */
     public function testExecute()
     {
@@ -200,8 +204,8 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::execute
-     * @expectedException PDOException
+     * @covers \nochso\ORM\DBA\DBA::execute
+     * @expectedException \PDOException
      */
     public function testExecuteException()
     {
@@ -209,7 +213,7 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::escapeLike
+     * @covers \nochso\ORM\DBA\DBA::escapeLike
      */
     public function testEscapeLike()
     {
@@ -217,7 +221,7 @@ class DBATest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\DBA\DBA::escape
+     * @covers \nochso\ORM\DBA\DBA::escape
      */
     public function testEscape()
     {

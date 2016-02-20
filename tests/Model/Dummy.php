@@ -1,7 +1,9 @@
 <?php
 
-namespace Test\Model;
+namespace nochso\ORM\Test\Model;
 
-class Dummy extends \nochso\ORM\Model
+use nochso\ORM\Model;
+
+class Dummy extends Model
 {
 }

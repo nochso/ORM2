@@ -1,10 +1,11 @@
 <?php
 
-use nochso\ORM\DBA\DBA;
-use nochso\ORM\ResultSet;
-use Test\Model\User;
+namespace nochso\ORM\Test;
 
-class ResultSetTest extends PHPUnit_Framework_TestCase
+use nochso\ORM\DBA\DBA;
+use nochso\ORM\Test\Model\User;
+
+class ResultSetTest extends \PHPUnit_Framework_TestCase
 {
     public static function setUpBeforeClass()
     {
@@ -39,7 +40,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\ResultSet::fetchRelations
+     * @covers \nochso\ORM\ResultSet::fetchRelations
      */
     public function testFetchRelations()
     {
@@ -77,7 +78,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\ResultSet::getPrimaryKeyList
+     * @covers \nochso\ORM\ResultSet::getPrimaryKeyList
      */
     public function testGetPrimaryKeyList()
     {
@@ -92,7 +93,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\ResultSet::update
+     * @covers \nochso\ORM\ResultSet::update
      */
     public function testUpdate()
     {
@@ -112,7 +113,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\ResultSet::save
+     * @covers \nochso\ORM\ResultSet::save
      */
     public function testSave()
     {
@@ -144,7 +145,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\ResultSet::offsetGet
+     * @covers \nochso\ORM\ResultSet::offsetGet
      */
     public function testOffsetGet()
     {
@@ -158,7 +159,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\ResultSet::offsetSet
+     * @covers \nochso\ORM\ResultSet::offsetSet
      */
     public function testOffsetSet()
     {
@@ -173,7 +174,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\ResultSet::delete
+     * @covers \nochso\ORM\ResultSet::delete
      */
     public function testDelete()
     {
@@ -202,7 +203,7 @@ class ResultSetTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\ResultSet::count
+     * @covers \nochso\ORM\ResultSet::count
      */
     public function testCount()
     {

@@ -1,16 +1,15 @@
 <?php
+
+namespace nochso\ORM\Test;
+
 use nochso\ORM\DBA\DBA;
-use Test\Model\Dummy;
-use Test\Model\User;
+use nochso\ORM\Model;
+use nochso\ORM\QueryBuilder;
+use nochso\ORM\Test\Model\Comment;
+use nochso\ORM\Test\Model\Dummy;
+use nochso\ORM\Test\Model\User;
 
-//require("lib/autoload.php");
-//use nochso\ORM\Model;
-//use nochso\ORM\DBA\DBA;
-//use Test\Model\User;
-//use Test\Model\UserRole;
-//use Test\Model\Dummy;
-
-class ModelTest extends PHPUnit_Framework_TestCase
+class ModelTest extends \PHPUnit_Framework_TestCase
 {
     public static function setUpBeforeClass()
     {
@@ -45,20 +44,20 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\Model::__construct
+     * @covers \nochso\ORM\Model::__construct
      */
     public function testConstructor()
     {
         // Dummy::$_tableName is null before first instantiation
-        $reflection = new \ReflectionProperty('Test\Model\Dummy', '_tableName');
+        $reflection = new \ReflectionProperty(Dummy::class, '_tableName');
         $reflection->setAccessible(true);
         $this->assertNull($reflection->getValue());
 
         $dummy = new Dummy();
-        $this->assertEquals($reflection->getValue(), 'test_model_dummy');
+        $this->assertEquals($reflection->getValue(), 'nochso_orm_test_model_dummy');
 
         // User::$_tableName is defined by User
-        $reflection = new \ReflectionProperty('Test\Model\User', '_tableName');
+        $reflection = new \ReflectionProperty(User::class, '_tableName');
         $reflection->setAccessible(true);
         $this->assertEquals($reflection->getValue(), 'user');
 
@@ -67,7 +66,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($reflection->getValue(), 'user');
 
         // User has relations, so they should have been loaded statically
-        $reflection = new \ReflectionProperty('Test\Model\User', '_relations');
+        $reflection = new \ReflectionProperty(User::class, '_relations');
         $reflection->setAccessible(true);
         $relations = $reflection->getValue();
         $this->assertArrayHasKey('role', $relations);
@@ -81,7 +80,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\Model::select
+     * @covers \nochso\ORM\Model::select
      */
     public function testSelect()
     {
@@ -91,7 +90,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\Model::dispense
+     * @covers \nochso\ORM\Model::dispense
      */
     public function testDispense()
     {
@@ -104,19 +103,19 @@ class ModelTest extends PHPUnit_Framework_TestCase
 
     public function selectHelper($user)
     {
-        $this->assertEquals(get_class($user), 'Test\Model\User');
+        $this->assertEquals(get_class($user), User::class);
 
         // Should prepare the query builder with the select column
         $column = 'COUNT(id)';
         $user = User::select($column);
 
         // Get the private QueryBuilder
-        $refQueryBuilder = new \ReflectionProperty('\nochso\ORM\Model', 'queryBuilder');
+        $refQueryBuilder = new \ReflectionProperty(Model::class, 'queryBuilder');
         $refQueryBuilder->setAccessible(true);
         $queryBuilder = $refQueryBuilder->getValue($user);
 
         // Test the QueryBuilders selectColumns
-        $refSelectColumns = new \ReflectionProperty('\nochso\ORM\QueryBuilder', 'selectColumns');
+        $refSelectColumns = new \ReflectionProperty(QueryBuilder::class, 'selectColumns');
         $refSelectColumns->setAccessible(true);
         $selectColumns = $refSelectColumns->getValue($queryBuilder);
         $this->assertCount(1, $selectColumns);
@@ -124,7 +123,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\Model::save
+     * @covers \nochso\ORM\Model::save
      */
     public function testSave()
     {
@@ -147,19 +146,19 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\Model::save
+     * @covers \nochso\ORM\Model::save
      */
     public function testSaveChosenPrimaryKey()
     {
-        $user = new \Test\Model\Comment();
+        $user = new Comment();
         $user->id = 99;
         $user->save();
         $this->assertEquals(99, $user->id);
     }
 
     /**
-     * @covers nochso\ORM\Model::save
-     * @expectedException Exception
+     * @covers \nochso\ORM\Model::save
+     * @expectedException \Exception
      * @expectedExceptionMessage Can not update existing row of table user without knowing the primary key.
      */
     public function testSaveException()
@@ -170,7 +169,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\Model::toAssoc
+     * @covers \nochso\ORM\Model::toAssoc
      */
     public function testToAssoc()
     {
@@ -182,7 +181,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\Model::getPrimaryKeyValue
+     * @covers \nochso\ORM\Model::getPrimaryKeyValue
      */
     public function testGetPrimaryKeyValue()
     {
@@ -193,7 +192,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\Model::hydrate
+     * @covers \nochso\ORM\Model::hydrate
      */
     public function testHydrate()
     {
@@ -205,7 +204,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\Model::one
+     * @covers \nochso\ORM\Model::one
      */
     public function testOne()
     {
@@ -216,7 +215,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\Model::all
+     * @covers \nochso\ORM\Model::all
      */
     public function testAll()
     {
@@ -229,7 +228,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\Model::delete
+     * @covers \nochso\ORM\Model::delete
      */
     public function testDelete()
     {
@@ -251,7 +250,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\Model::fetchRelations
+     * @covers \nochso\ORM\Model::fetchRelations
      */
     public function testFetchRelations()
     {
@@ -265,7 +264,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers nochso\ORM\Model::update
+     * @covers \nochso\ORM\Model::update
      */
     public function testUpdate()
     {

@@ -1,12 +1,15 @@
 <?php
 
-namespace Test\Model;
+namespace nochso\ORM\Test\Model;
 
-class UserRole extends \nochso\ORM\Model
+use nochso\ORM\Model;
+use nochso\ORM\Relation;
+
+class UserRole extends Model
 {
     protected static $_tableName = 'user_role';
     protected static $_relations = [
-        'user' => [\nochso\ORM\Relation::HAS_MANY, 'Test\Model\User', 'id', 'role_id'],
+        'user' => [Relation::HAS_MANY, User::class, 'id', 'role_id'],
     ];
     public $id;
     public $description;

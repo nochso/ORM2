@@ -1,9 +1,12 @@
 <?php
 
+namespace nochso\ORM\Test\DBA;
+
 use nochso\ORM\DBA\DBA;
 use nochso\ORM\DBA\LogEntry;
+use nochso\ORM\Test\Model\User;
 
-class LogEntryTest extends PHPUnit_Framework_TestCase
+class LogEntryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers \nochso\ORM\DBA\LogEntry::__construct
@@ -66,7 +69,7 @@ class LogEntryTest extends PHPUnit_Framework_TestCase
     public function testToStringMany()
     {
         $ids = range(1, 12);
-        $users = \Test\Model\User::select()->in('id', $ids)->all();
+        $users = User::select()->in('id', $ids)->all();
         $log = DBA::getLog();
         $last = end($log);
         $expected = "0.000s	SELECT * FROM `user` WHERE id IN ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12')\n";
